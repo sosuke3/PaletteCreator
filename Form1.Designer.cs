@@ -28,41 +28,43 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.exportYYPalette = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.button3 = new System.Windows.Forms.Button();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.importSPRfromROM = new System.Windows.Forms.Button();
+            this.ImportROMopenDialog = new System.Windows.Forms.OpenFileDialog();
+            this.ImportSPRopenDialog = new System.Windows.Forms.OpenFileDialog();
+            this.ExportYYPalettesaveDialog = new System.Windows.Forms.SaveFileDialog();
+            this.importYYPalette = new System.Windows.Forms.Button();
+            this.exportSPR = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
-            this.saveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
-            this.saveFileDialog3 = new System.Windows.Forms.SaveFileDialog();
+            this.ExportSPRsaveDialog = new System.Windows.Forms.SaveFileDialog();
+            this.ExportROMsaveDialog = new System.Windows.Forms.SaveFileDialog();
             this.label3 = new System.Windows.Forms.Label();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
-            this.openFileDialog3 = new System.Windows.Forms.OpenFileDialog();
-            this.openFileDialog4 = new System.Windows.Forms.OpenFileDialog();
-            this.saveFileDialog4 = new System.Windows.Forms.SaveFileDialog();
-            this.button2 = new System.Windows.Forms.Button();
+            this.exportGalePalette = new System.Windows.Forms.Button();
+            this.importGalePalette = new System.Windows.Forms.Button();
+            this.ImportGalePaletteopenDialog = new System.Windows.Forms.OpenFileDialog();
+            this.ImportYYPaletteopenDialog = new System.Windows.Forms.OpenFileDialog();
+            this.ExportGalePalettesaveDialog = new System.Windows.Forms.SaveFileDialog();
+            this.importSPR = new System.Windows.Forms.Button();
             this.openFileDialog5 = new System.Windows.Forms.OpenFileDialog();
-            this.button9 = new System.Windows.Forms.Button();
-            this.saveFileDialog5 = new System.Windows.Forms.SaveFileDialog();
+            this.exportPNG = new System.Windows.Forms.Button();
+            this.ExportPNGsaveDialog = new System.Windows.Forms.SaveFileDialog();
             this.label4 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.button10 = new System.Windows.Forms.Button();
+            this.importPNG = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.button11 = new System.Windows.Forms.Button();
-            this.openFileDialog6 = new System.Windows.Forms.OpenFileDialog();
-            this.saveFileDialog6 = new System.Windows.Forms.SaveFileDialog();
+            this.injectROM = new System.Windows.Forms.Button();
+            this.InjectSPRopenDialog = new System.Windows.Forms.OpenFileDialog();
+            this.InjectROMsaveDialog = new System.Windows.Forms.SaveFileDialog();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -83,7 +85,7 @@
             this.pictureBox2.Size = new System.Drawing.Size(512, 32);
             this.pictureBox2.TabIndex = 2;
             this.pictureBox2.TabStop = false;
-            this.pictureBox2.DoubleClick += new System.EventHandler(this.pictureBox2_DoubleClick);
+            this.pictureBox2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox2_MouseMove);
             this.pictureBox2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox2_MouseDoubleClick);
             // 
             // comboBox1
@@ -112,88 +114,86 @@
             this.label2.TabIndex = 4;
             this.label2.Text = "Selected Armor : ";
             // 
-            // button1
+            // exportYYPalette
             // 
-            this.button1.Location = new System.Drawing.Point(518, 539);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(190, 29);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Export All Palettes for YY-CHR";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.exportYYPalette.Location = new System.Drawing.Point(617, 476);
+            this.exportYYPalette.Name = "exportYYPalette";
+            this.exportYYPalette.Size = new System.Drawing.Size(90, 35);
+            this.exportYYPalette.TabIndex = 5;
+            this.exportYYPalette.Text = "Export YY-CHR Pal";
+            this.exportYYPalette.UseVisualStyleBackColor = true;
+            this.exportYYPalette.Click += new System.EventHandler(this.exportYYPalette_Click);
             // 
-            // button3
+            // importSPRfromROM
             // 
-            this.button3.Location = new System.Drawing.Point(518, 168);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(190, 53);
-            this.button3.TabIndex = 7;
-            this.button3.Text = "Load GFX and Palettes from ROM";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.importSPRfromROM.Location = new System.Drawing.Point(522, 316);
+            this.importSPRfromROM.Name = "importSPRfromROM";
+            this.importSPRfromROM.Size = new System.Drawing.Size(90, 35);
+            this.importSPRfromROM.TabIndex = 7;
+            this.importSPRfromROM.Text = "Import ROM";
+            this.importSPRfromROM.UseVisualStyleBackColor = true;
+            this.importSPRfromROM.Click += new System.EventHandler(this.importSPRfromROM_Click);
             // 
-            // openFileDialog1
+            // ImportROMopenDialog
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.Filter = "ROM file|*.sfc|All Files|*.*";
-            this.openFileDialog1.RestoreDirectory = true;
-            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
+            this.ImportROMopenDialog.Filter = "SNES ROMs|*.sfc|All Files|*.*";
+            this.ImportROMopenDialog.RestoreDirectory = true;
+            this.ImportROMopenDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.ImportROMopenDialog_FileOk);
             // 
-            // openFileDialog2
+            // ImportSPRopenDialog
             // 
-            this.openFileDialog2.FileName = "openFileDialog2";
-            this.openFileDialog2.Filter = "Randomizer Sprite Format|*.spr";
-            this.openFileDialog2.RestoreDirectory = true;
-            this.openFileDialog2.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog2_FileOk);
+            this.ImportSPRopenDialog.Filter = "ALttP Sprites|*.spr";
+            this.ImportSPRopenDialog.RestoreDirectory = true;
+            this.ImportSPRopenDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.ImportSPRopenDialog_FileOk);
             // 
-            // saveFileDialog1
+            // ExportYYPalettesaveDialog
             // 
-            this.saveFileDialog1.FileName = "YY-CHR Palette file|*.pal";
-            this.saveFileDialog1.Filter = "Palettes Files|*.pal";
-            this.saveFileDialog1.RestoreDirectory = true;
-            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
+            this.ExportYYPalettesaveDialog.Filter = "YY-CHR Palettes|*.pal";
+            this.ExportYYPalettesaveDialog.RestoreDirectory = true;
+            this.ExportYYPalettesaveDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.ExportYYPalettesaveDialog_FileOk);
             // 
-            // button4
+            // importYYPalette
             // 
-            this.button4.Location = new System.Drawing.Point(518, 469);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(190, 29);
-            this.button4.TabIndex = 8;
-            this.button4.Text = "Import All Palettes from YY-CHR .pal";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.importYYPalette.Location = new System.Drawing.Point(522, 476);
+            this.importYYPalette.Name = "importYYPalette";
+            this.importYYPalette.Size = new System.Drawing.Size(90, 35);
+            this.importYYPalette.TabIndex = 8;
+            this.importYYPalette.Text = "Import YY-CHR Pal";
+            this.importYYPalette.UseVisualStyleBackColor = true;
+            this.importYYPalette.Click += new System.EventHandler(this.importYYPalette_Click);
             // 
-            // button5
+            // exportSPR
             // 
-            this.button5.Location = new System.Drawing.Point(518, 575);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(190, 29);
-            this.button5.TabIndex = 9;
-            this.button5.Text = "Export As Sprite (for Randomizer)";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click_1);
+            this.exportSPR.Location = new System.Drawing.Point(617, 356);
+            this.exportSPR.Name = "exportSPR";
+            this.exportSPR.Size = new System.Drawing.Size(90, 35);
+            this.exportSPR.TabIndex = 9;
+            this.exportSPR.Text = "Export SPR";
+            this.exportSPR.UseVisualStyleBackColor = true;
+            this.exportSPR.Click += new System.EventHandler(this.exportSPR_Click_1);
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(518, 286);
+            this.button6.Enabled = false;
+            this.button6.Location = new System.Drawing.Point(617, 316);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(190, 29);
+            this.button6.Size = new System.Drawing.Size(90, 35);
             this.button6.TabIndex = 10;
-            this.button6.Text = "Save full ROM";
+            this.button6.Text = "Export ROM";
             this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.button6.Click += new System.EventHandler(this.ExportROM_Click);
             // 
-            // saveFileDialog2
+            // ExportSPRsaveDialog
             // 
-            this.saveFileDialog2.Filter = "Randomizer Sprite Format|*.spr";
-            this.saveFileDialog2.RestoreDirectory = true;
-            this.saveFileDialog2.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog2_FileOk);
+            this.ExportSPRsaveDialog.Filter = "ALttP Sprites|*.spr";
+            this.ExportSPRsaveDialog.RestoreDirectory = true;
+            this.ExportSPRsaveDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.ExportSPRsaveDialog_FileOk);
             // 
-            // saveFileDialog3
+            // ExportROMsaveDialog
             // 
-            this.saveFileDialog3.Filter = "Snes ROM|*.sfc";
-            this.saveFileDialog3.RestoreDirectory = true;
-            this.saveFileDialog3.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog3_FileOk);
+            this.ExportROMsaveDialog.Filter = "SNES ROMs|*.sfc";
+            this.ExportROMsaveDialog.RestoreDirectory = true;
+            this.ExportROMsaveDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.ExportROMsaveDialog_FileOk);
             // 
             // label3
             // 
@@ -204,79 +204,76 @@
             this.label3.TabIndex = 11;
             this.label3.Text = "Preview : ";
             // 
-            // button7
+            // exportGalePalette
             // 
-            this.button7.Location = new System.Drawing.Point(518, 504);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(190, 29);
-            this.button7.TabIndex = 12;
-            this.button7.Text = "Save Selected Pal for Graphics Gale";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.exportGalePalette.Location = new System.Drawing.Point(617, 436);
+            this.exportGalePalette.Name = "exportGalePalette";
+            this.exportGalePalette.Size = new System.Drawing.Size(90, 35);
+            this.exportGalePalette.TabIndex = 12;
+            this.exportGalePalette.Text = "Export Graphics Gale Pal";
+            this.exportGalePalette.UseVisualStyleBackColor = true;
+            this.exportGalePalette.Click += new System.EventHandler(this.exportGalePalette_Click);
             // 
-            // button8
+            // importGalePalette
             // 
-            this.button8.Location = new System.Drawing.Point(518, 434);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(190, 29);
-            this.button8.TabIndex = 13;
-            this.button8.Text = "Load Selected Pal from GG .pal";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
+            this.importGalePalette.Location = new System.Drawing.Point(522, 436);
+            this.importGalePalette.Name = "importGalePalette";
+            this.importGalePalette.Size = new System.Drawing.Size(90, 35);
+            this.importGalePalette.TabIndex = 13;
+            this.importGalePalette.Text = "Import Graphics Gale Pal";
+            this.importGalePalette.UseVisualStyleBackColor = true;
+            this.importGalePalette.Click += new System.EventHandler(this.importGalePalette_Click);
             // 
-            // openFileDialog3
+            // ImportGalePaletteopenDialog
             // 
-            this.openFileDialog3.FileName = "openFileDialog3";
-            this.openFileDialog3.Filter = "Graphics Gale Palette|*.pal";
-            this.openFileDialog3.RestoreDirectory = true;
-            this.openFileDialog3.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog3_FileOk);
+            this.ImportGalePaletteopenDialog.Filter = "Graphics Gale Palettes|*.pal";
+            this.ImportGalePaletteopenDialog.RestoreDirectory = true;
+            this.ImportGalePaletteopenDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.ImportGalePaletteopenDialog_FileOk);
             // 
-            // openFileDialog4
+            // ImportYYPaletteopenDialog
             // 
-            this.openFileDialog4.FileName = "openFileDialog4";
-            this.openFileDialog4.Filter = "YY-CHR Palette file|*.pal";
-            this.openFileDialog4.RestoreDirectory = true;
-            this.openFileDialog4.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog4_FileOk);
+            this.ImportYYPaletteopenDialog.Filter = "YY-CHR Palettes|*.pal";
+            this.ImportYYPaletteopenDialog.RestoreDirectory = true;
+            this.ImportYYPaletteopenDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.ImportYYPaletteopenDialog_FileOk);
             // 
-            // saveFileDialog4
+            // ExportGalePalettesaveDialog
             // 
-            this.saveFileDialog4.Filter = "Graphics Gale palette|*.pal";
-            this.saveFileDialog4.RestoreDirectory = true;
-            this.saveFileDialog4.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog4_FileOk);
+            this.ExportGalePalettesaveDialog.Filter = "Graphics Gale Palettes|*.pal";
+            this.ExportGalePalettesaveDialog.RestoreDirectory = true;
+            this.ExportGalePalettesaveDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.ExportGalePalettesaveDialog_FileOk);
             // 
-            // button2
+            // importSPR
             // 
-            this.button2.Location = new System.Drawing.Point(518, 227);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(190, 53);
-            this.button2.TabIndex = 14;
-            this.button2.Text = "Load GFX and Palettes from .spr";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click_1);
+            this.importSPR.Location = new System.Drawing.Point(522, 356);
+            this.importSPR.Name = "importSPR";
+            this.importSPR.Size = new System.Drawing.Size(90, 35);
+            this.importSPR.TabIndex = 14;
+            this.importSPR.Text = "Import SPR";
+            this.importSPR.UseVisualStyleBackColor = true;
+            this.importSPR.Click += new System.EventHandler(this.importSPR_Click_1);
             // 
             // openFileDialog5
             // 
-            this.openFileDialog5.FileName = "openFileDialog1";
-            this.openFileDialog5.Filter = "ROM file|*.sfc|All Files|*.*";
+            this.openFileDialog5.Filter = "SNES ROMs|*.sfc|All Files|*.*";
             this.openFileDialog5.RestoreDirectory = true;
             this.openFileDialog5.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog5_FileOk);
             // 
-            // button9
+            // exportPNG
             // 
-            this.button9.Location = new System.Drawing.Point(518, 399);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(190, 29);
-            this.button9.TabIndex = 15;
-            this.button9.Text = "Export as Png";
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
+            this.exportPNG.Location = new System.Drawing.Point(617, 396);
+            this.exportPNG.Name = "exportPNG";
+            this.exportPNG.Size = new System.Drawing.Size(90, 35);
+            this.exportPNG.TabIndex = 15;
+            this.exportPNG.Text = "Export PNG";
+            this.exportPNG.UseVisualStyleBackColor = true;
+            this.exportPNG.Click += new System.EventHandler(this.exportPNG_Click);
             // 
-            // saveFileDialog5
+            // ExportPNGsaveDialog
             // 
-            this.saveFileDialog5.DefaultExt = "png";
-            this.saveFileDialog5.Filter = "PNG Images Files|*.png";
-            this.saveFileDialog5.RestoreDirectory = true;
-            this.saveFileDialog5.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog5_FileOk);
+            this.ExportPNGsaveDialog.DefaultExt = "png";
+            this.ExportPNGsaveDialog.Filter = "PNGs|*.png";
+            this.ExportPNGsaveDialog.RestoreDirectory = true;
+            this.ExportPNGsaveDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.ExportPNGsaveDialog_FileOk);
             // 
             // label4
             // 
@@ -295,15 +292,16 @@
             this.pictureBox1.TabIndex = 17;
             this.pictureBox1.TabStop = false;
             // 
-            // button10
+            // importPNG
             // 
-            this.button10.Location = new System.Drawing.Point(518, 364);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(190, 29);
-            this.button10.TabIndex = 18;
-            this.button10.Text = "Import Png";
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
+            this.importPNG.Enabled = false;
+            this.importPNG.Location = new System.Drawing.Point(522, 396);
+            this.importPNG.Name = "importPNG";
+            this.importPNG.Size = new System.Drawing.Size(90, 35);
+            this.importPNG.TabIndex = 18;
+            this.importPNG.Text = "Import PNG";
+            this.importPNG.UseVisualStyleBackColor = true;
+            this.importPNG.Click += new System.EventHandler(this.importPNG_Click);
             // 
             // label5
             // 
@@ -347,55 +345,55 @@
             this.checkBox1.Visible = false;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
-            // button11
+            // injectROM
             // 
-            this.button11.Location = new System.Drawing.Point(518, 112);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(190, 53);
-            this.button11.TabIndex = 71;
-            this.button11.Text = "Load a .spr file and Patch it into a ROM";
-            this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
+            this.injectROM.Location = new System.Drawing.Point(522, 260);
+            this.injectROM.Name = "injectROM";
+            this.injectROM.Size = new System.Drawing.Size(185, 50);
+            this.injectROM.TabIndex = 71;
+            this.injectROM.Text = "Import SPR && Export to ROM";
+            this.injectROM.UseVisualStyleBackColor = true;
+            this.injectROM.Click += new System.EventHandler(this.injectROM_Click);
             // 
-            // openFileDialog6
+            // InjectSPRopenDialog
             // 
-            this.openFileDialog6.Filter = "Randomizer Sprite Format|*.spr";
-            this.openFileDialog6.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog6_FileOk);
+            this.InjectSPRopenDialog.Filter = "ALttP Sprites|*.spr";
+            this.InjectSPRopenDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.InjectSPRopenDialog_FileOk);
             // 
-            // saveFileDialog6
+            // InjectROMsaveDialog
             // 
-            this.saveFileDialog6.Filter = "Snes ROM|*.sfc";
-            this.saveFileDialog6.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog6_FileOk);
+            this.InjectROMsaveDialog.Filter = "SNES ROMs|*.sfc";
+            this.InjectROMsaveDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.InjectROMsaveDialog_FileOk);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(720, 616);
-            this.Controls.Add(this.button11);
+            this.Controls.Add(this.injectROM);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.button10);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.importPNG);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.button9);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button8);
-            this.Controls.Add(this.button7);
+            this.Controls.Add(this.exportPNG);
+            this.Controls.Add(this.importSPR);
+            this.Controls.Add(this.importGalePalette);
+            this.Controls.Add(this.exportGalePalette);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.exportSPR);
+            this.Controls.Add(this.importYYPalette);
+            this.Controls.Add(this.importSPRfromROM);
+            this.Controls.Add(this.exportYYPalette);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.pictureBox1);
             this.Name = "Form1";
-            this.Text = "Palette Creator 3.6";
+            this.Text = "PaletteCreator ";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -409,33 +407,34 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button exportYYPalette;
         private System.Windows.Forms.ColorDialog colorDialog1;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.OpenFileDialog openFileDialog2;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button importSPRfromROM;
+        private System.Windows.Forms.OpenFileDialog ImportROMopenDialog;
+        private System.Windows.Forms.OpenFileDialog ImportSPRopenDialog;
+        private System.Windows.Forms.SaveFileDialog ExportYYPalettesaveDialog;
+        private System.Windows.Forms.Button importYYPalette;
+        private System.Windows.Forms.Button exportSPR;
         private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog2;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog3;
+        private System.Windows.Forms.SaveFileDialog ExportSPRsaveDialog;
+        private System.Windows.Forms.SaveFileDialog ExportROMsaveDialog;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.OpenFileDialog openFileDialog3;
-        private System.Windows.Forms.OpenFileDialog openFileDialog4;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog4;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button exportGalePalette;
+        private System.Windows.Forms.Button importGalePalette;
+        private System.Windows.Forms.OpenFileDialog ImportGalePaletteopenDialog;
+        private System.Windows.Forms.OpenFileDialog ImportYYPaletteopenDialog;
+        private System.Windows.Forms.SaveFileDialog ExportGalePalettesaveDialog;
+        private System.Windows.Forms.Button importSPR;
         private System.Windows.Forms.OpenFileDialog openFileDialog5;
-        private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog5;
+        private System.Windows.Forms.Button exportPNG;
+        private System.Windows.Forms.SaveFileDialog ExportPNGsaveDialog;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button importPNG;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
+/*
         private System.Windows.Forms.TextBox r1;
         private System.Windows.Forms.TextBox g1;
         private System.Windows.Forms.TextBox b1;
@@ -484,10 +483,12 @@
         private System.Windows.Forms.TextBox b16;
         private System.Windows.Forms.TextBox g16;
         private System.Windows.Forms.TextBox r16;
+*/
         private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Button button11;
-        private System.Windows.Forms.OpenFileDialog openFileDialog6;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog6;
+        private System.Windows.Forms.Button injectROM;
+        private System.Windows.Forms.OpenFileDialog InjectSPRopenDialog;
+        private System.Windows.Forms.SaveFileDialog InjectROMsaveDialog;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

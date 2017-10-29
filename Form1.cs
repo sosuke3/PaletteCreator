@@ -27,20 +27,20 @@ namespace PaletteCreator
         private void Form1_Load(object sender, EventArgs e)
         {
 
-         /*   if (File.Exists("folderstemp.txt"))
-            {
-                tempFolders = File.ReadAllLines("folderstemp.txt");
-                openFileDialog1.InitialDirectory = tempFolders[0];
-                openFileDialog2.InitialDirectory = tempFolders[1];
-                openFileDialog3.InitialDirectory = tempFolders[2];
-                openFileDialog4.InitialDirectory = tempFolders[3];
-                openFileDialog5.InitialDirectory = tempFolders[4];
-                saveFileDialog1.InitialDirectory = tempFolders[5];
-                saveFileDialog2.InitialDirectory = tempFolders[6];
-                saveFileDialog3.InitialDirectory = tempFolders[7];
-                saveFileDialog4.InitialDirectory = tempFolders[8];
-                saveFileDialog5.InitialDirectory = tempFolders[9];
-            }*/
+            /*   if (File.Exists("folderstemp.txt"))
+               {
+                   tempFolders = File.ReadAllLines("folderstemp.txt");
+                   ImportROMopenDialog.InitialDirectory = tempFolders[0];
+                   ImportSPRopenDialog.InitialDirectory = tempFolders[1];
+                   ImportGalePaletteopenDialog.InitialDirectory = tempFolders[2];
+                   ImportYYPaletteopenDialog.InitialDirectory = tempFolders[3];
+                   openFileDialog5.InitialDirectory = tempFolders[4];
+                   ExportYYPalettesaveDialog.InitialDirectory = tempFolders[5];
+                   ExportSPRsaveDialog.InitialDirectory = tempFolders[6];
+                   ExportROMsaveDialog.InitialDirectory = tempFolders[7];
+                   ExportGalePalettesaveDialog.InitialDirectory = tempFolders[8];
+                   ExportPNGsaveDialog.InitialDirectory = tempFolders[9];
+               }*/
 
             for (int i = 0; i < 16; i++)
             {
@@ -69,13 +69,21 @@ namespace PaletteCreator
             for (int i = 0; i < 16; i++)
             {
                 if (comboBox1.SelectedIndex == 0)
+                {
                     g.FillRectangle(new SolidBrush(palette[i]), new Rectangle(i * 32, 0, (i * 32) + 32, 32));
+                }
                 if (comboBox1.SelectedIndex == 1)
+                {
                     g.FillRectangle(new SolidBrush(palette2[i]), new Rectangle(i * 32, 0, (i * 32) + 32, 32));
+                }
                 if (comboBox1.SelectedIndex == 2)
+                {
                     g.FillRectangle(new SolidBrush(palette3[i]), new Rectangle(i * 32, 0, (i * 32) + 32, 32));
+                }
                 if (comboBox1.SelectedIndex == 3)
+                {
                     g.FillRectangle(new SolidBrush(palette4[i]), new Rectangle(i * 32, 0, (i * 32) + 32, 32));
+                }
             }
 
             
@@ -250,9 +258,51 @@ namespace PaletteCreator
             pictureBox1.Refresh();
         }
 
-        private void pictureBox2_DoubleClick(object sender, EventArgs e)
+        private static String HexConverter(System.Drawing.Color c)
         {
+            return "#" + c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2");
+        }
 
+        private static String RGBConverter(System.Drawing.Color c)
+        {
+            return "RGB(" + c.R.ToString() + "," + c.G.ToString() + "," + c.B.ToString() + ")";
+        }
+
+        private void pictureBox2_MouseMove(object sender, MouseEventArgs e)
+        {
+            var x = Cursor.Position.X;
+            var y = Cursor.Position.Y;
+
+            for (int i = 0; i < 16; i++)
+            {
+                if (e.X >= i * 32 && e.X <= (i * 32) + 32)
+                {
+                    Color swatch = palette[i];
+                    switch(comboBox1.SelectedIndex)
+                    {
+                        case 0:
+                            swatch = palette[i];
+                            break;
+                        case 1:
+                            swatch = palette2[i];
+                            break;
+                        case 2:
+                            swatch = palette3[i];
+                            break;
+                        case 3:
+                            swatch = palette4[i];
+                            break;
+                    }
+                    string tip = "";
+                    tip += "   Index " + i;
+                    tip += "\n";
+                    tip += "   " + HexConverter(swatch);
+                    tip += "\n";
+                    tip += "   " + RGBConverter(swatch);
+                    toolTip1.Show(tip, pictureBox2);
+                }
+            }
+            refreshEverything();
         }
 
         private void pictureBox2_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -290,14 +340,15 @@ namespace PaletteCreator
             refreshEverything();
         }
         
-        private void button3_Click(object sender, EventArgs e)
+        // IMPORT ROM
+        private void importSPRfromROM_Click(object sender, EventArgs e)
         {
             if (tempFolders[0] != null)
             {
-                openFileDialog1.InitialDirectory = tempFolders[0];
+                ImportROMopenDialog.InitialDirectory = tempFolders[0];
             }
             
-            openFileDialog1.ShowDialog();
+            ImportROMopenDialog.ShowDialog();
 
         }
 
@@ -306,11 +357,13 @@ namespace PaletteCreator
             return Color.FromArgb(((c & 0x1F) * 8), ((c & 0x3E0) >> 5)*8, ((c & 0x7C00) >> 10) * 8);
         }
         byte[] ROM_DATA;
-        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+
+        // IMPORT ROM
+        private void ImportROMopenDialog_FileOk(object sender, CancelEventArgs e)
         {
 
-            tempFolders[0] = Path.GetDirectoryName(openFileDialog1.FileName);
-            FileStream fs = new FileStream(openFileDialog1.FileName, FileMode.Open, FileAccess.Read);
+            tempFolders[0] = Path.GetDirectoryName(ImportROMopenDialog.FileName);
+            FileStream fs = new FileStream(ImportROMopenDialog.FileName, FileMode.Open, FileAccess.Read);
             ROM_DATA = new byte[(int)fs.Length];
             fs.Read(ROM_DATA, 0, (int)fs.Length);
          
@@ -335,16 +388,18 @@ namespace PaletteCreator
             
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        // IMPORT SPR
+        private void importSPR_Click(object sender, EventArgs e)
         {
-            openFileDialog2.ShowDialog();
+            ImportSPRopenDialog.ShowDialog();
         }
 
-        private void openFileDialog2_FileOk(object sender, CancelEventArgs e)
+        // IMPORT SPR
+        private void ImportSPRopenDialog_FileOk(object sender, CancelEventArgs e)
         {
-            tempFolders[1] = Path.GetDirectoryName(openFileDialog2.FileName);
+            tempFolders[1] = Path.GetDirectoryName(ImportSPRopenDialog.FileName);
             ROM_DATA = new byte[2097152];
-            FileStream fs = new FileStream(openFileDialog2.FileName, FileMode.Open, FileAccess.Read);
+            FileStream fs = new FileStream(ImportSPRopenDialog.FileName, FileMode.Open, FileAccess.Read);
             data = new byte[fs.Length];
             fs.Read(data, 0, (int)fs.Length);
 
@@ -386,18 +441,19 @@ namespace PaletteCreator
             refreshEverything();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        // IMPORT ROM
+        private void exportYYPalette_Click(object sender, EventArgs e)
         {
             if (tempFolders[5] != null)
             {
-                saveFileDialog1.InitialDirectory = tempFolders[5];
+                ExportYYPalettesaveDialog.InitialDirectory = tempFolders[5];
             }
-            saveFileDialog1.ShowDialog();
+            ExportYYPalettesaveDialog.ShowDialog();
         }
 
-        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
+        private void ExportYYPalettesaveDialog_FileOk(object sender, CancelEventArgs e)
         {
-            tempFolders[5] = Path.GetDirectoryName(saveFileDialog1.FileName);
+            tempFolders[5] = Path.GetDirectoryName(ExportYYPalettesaveDialog.FileName);
 
             byte[] palette_data = new byte[0x300];
             int palette_data_i = 0;
@@ -430,18 +486,18 @@ namespace PaletteCreator
                 palette_data_i += 3;
             }
 
-            FileStream fs = new FileStream(saveFileDialog1.FileName, FileMode.OpenOrCreate, FileAccess.Write);
+            FileStream fs = new FileStream(ExportYYPalettesaveDialog.FileName, FileMode.OpenOrCreate, FileAccess.Write);
             fs.Write(palette_data, 0, 0x300);
             fs.Close();
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void importYYPalette_Click(object sender, EventArgs e)
         {
             if (tempFolders[3] != null)
             {
-                openFileDialog4.InitialDirectory = tempFolders[3];
+                ImportYYPaletteopenDialog.InitialDirectory = tempFolders[3];
             }
-            openFileDialog4.ShowDialog();
+            ImportYYPaletteopenDialog.ShowDialog();
         }
 
         private void comboBox1_SelectedValueChanged(object sender, EventArgs e)
@@ -449,14 +505,15 @@ namespace PaletteCreator
             
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void exportSPR_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void saveFileDialog2_FileOk(object sender, CancelEventArgs e)
+        // EXPORT SPR
+        private void ExportSPRsaveDialog_FileOk(object sender, CancelEventArgs e)
         {
-            tempFolders[6] = Path.GetDirectoryName(saveFileDialog2.FileName);
+            tempFolders[6] = Path.GetDirectoryName(ExportSPRsaveDialog.FileName);
 
             if (ROM_DATA != null)
             {
@@ -500,15 +557,15 @@ namespace PaletteCreator
                     data[0x7000+i] =  palette_data[i];
                 }
 
-                FileStream fs = new FileStream(saveFileDialog2.FileName, FileMode.OpenOrCreate, FileAccess.Write);
+                FileStream fs = new FileStream(ExportSPRsaveDialog.FileName, FileMode.OpenOrCreate, FileAccess.Write);
                 fs.Write(data, 0, 0x7000 + 0x78);
                 fs.Close();
             }
         }
 
-        private void saveFileDialog3_FileOk(object sender, CancelEventArgs e)
+        private void ExportROMsaveDialog_FileOk(object sender, CancelEventArgs e)
         {
-            tempFolders[7] = Path.GetDirectoryName(saveFileDialog3.FileName);
+            tempFolders[7] = Path.GetDirectoryName(ExportROMsaveDialog.FileName);
             if (ROM_DATA != null)
             {
                 byte[] palette_data = new byte[0x78];
@@ -551,123 +608,138 @@ namespace PaletteCreator
                     ROM_DATA[0x0DD308+i] = palette_data[i];
                 }
 
-                FileStream fs = new FileStream(saveFileDialog3.FileName, FileMode.OpenOrCreate, FileAccess.Write);
+                FileStream fs = new FileStream(ExportROMsaveDialog.FileName, FileMode.OpenOrCreate, FileAccess.Write);
                 fs.Write(ROM_DATA, 0, ROM_DATA.Length);
                 fs.Close();
             }
         }
 
-        private void button5_Click_1(object sender, EventArgs e)
+        private void exportSPR_Click_1(object sender, EventArgs e)
         {
             if (tempFolders[6] != null)
             {
-                saveFileDialog2.InitialDirectory = tempFolders[6];
+                ExportSPRsaveDialog.InitialDirectory = tempFolders[6];
             }
-            saveFileDialog2.ShowDialog();
+            ExportSPRsaveDialog.ShowDialog();
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        // EXPORT ROM
+        private void ExportROM_Click(object sender, EventArgs e)
         {
             if (tempFolders[7] != null)
             {
-               saveFileDialog3.InitialDirectory = tempFolders[7];
+               ExportROMsaveDialog.InitialDirectory = tempFolders[7];
             }
-            saveFileDialog3.ShowDialog();
+            ExportROMsaveDialog.ShowDialog();
         }
 
-        private void button8_Click(object sender, EventArgs e)
+        private void importGalePalette_Click(object sender, EventArgs e)
         {
             if (tempFolders[2] != null)
             {
-                openFileDialog3.InitialDirectory = tempFolders[2];
+                ImportGalePaletteopenDialog.InitialDirectory = tempFolders[2];
             }
-            openFileDialog3.ShowDialog();
+            ImportGalePaletteopenDialog.ShowDialog();
         }
 
-        private void openFileDialog4_FileOk(object sender, CancelEventArgs e)
+        private void ImportYYPaletteopenDialog_FileOk(object sender, CancelEventArgs e)
         {
-            tempFolders[3] = Path.GetDirectoryName(openFileDialog4.FileName);
+            tempFolders[3] = Path.GetDirectoryName(ImportYYPaletteopenDialog.FileName);
             File.WriteAllLines("folderstemp.txt", tempFolders);
             byte[] palette_data = new byte[0x300];
-            FileStream fs = new FileStream(openFileDialog4.FileName, FileMode.OpenOrCreate, FileAccess.Read);
+            string[] text = File.ReadAllLines(ImportYYPaletteopenDialog.FileName);
+            FileStream fs = new FileStream(ImportYYPaletteopenDialog.FileName, FileMode.OpenOrCreate, FileAccess.Read);
             fs.Read(palette_data, 0, 0x300);
             fs.Close();
 
-           
-            int palette_data_i = 0;
-            for (int i = 0; i < 16; i++)
+            if (text.Length != 1)
             {
-                palette[i] = Color.FromArgb(((palette_data[palette_data_i]/8)*8), ((palette_data[palette_data_i+1]/8)*8), ((palette_data[palette_data_i+2]/8)*8));
-                palette_data_i += 3;
+                MessageBox.Show("YY-CHR Palette files are binary. The palette file provided doesn't seem to be. Could this be an ASCII Palette file instead?", "Invalid Palette File", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            for (int i = 0; i < 16; i++)
+            else
             {
-                palette2[i] = Color.FromArgb(((palette_data[palette_data_i]/8)*8), ((palette_data[palette_data_i + 1]/8)*8), ((palette_data[palette_data_i + 2]/8)*8));
-                palette_data_i += 3;
+                int palette_data_i = 0;
+                for (int i = 0; i < 16; i++)
+                {
+                    palette[i] = Color.FromArgb(((palette_data[palette_data_i] / 8) * 8), ((palette_data[palette_data_i + 1] / 8) * 8), ((palette_data[palette_data_i + 2] / 8) * 8));
+                    palette_data_i += 3;
+                }
+                for (int i = 0; i < 16; i++)
+                {
+                    palette2[i] = Color.FromArgb(((palette_data[palette_data_i] / 8) * 8), ((palette_data[palette_data_i + 1] / 8) * 8), ((palette_data[palette_data_i + 2] / 8) * 8));
+                    palette_data_i += 3;
+                }
+                for (int i = 0; i < 16; i++)
+                {
+                    palette3[i] = Color.FromArgb(((palette_data[palette_data_i] / 8) * 8), ((palette_data[palette_data_i + 1] / 8) * 8), ((palette_data[palette_data_i + 2] / 8) * 8));
+                    palette_data_i += 3;
+                }
+                for (int i = 0; i < 16; i++)
+                {
+                    palette4[i] = Color.FromArgb(((palette_data[palette_data_i] / 8) * 8), ((palette_data[palette_data_i + 1] / 8) * 8), ((palette_data[palette_data_i + 2] / 8) * 8));
+                    palette_data_i += 3;
+                }
             }
-            for (int i = 0; i < 16; i++)
-            {
-                palette3[i] = Color.FromArgb(((palette_data[palette_data_i]/8)*8), ((palette_data[palette_data_i + 1]/8)*8), ((palette_data[palette_data_i + 2]/8)*8));
-                palette_data_i += 3;
-            }
-            for (int i = 0; i < 16; i++)
-            {
-                palette4[i] = Color.FromArgb(((palette_data[palette_data_i]/8)*8), ((palette_data[palette_data_i + 1]/8)*8), ((palette_data[palette_data_i + 2]/8)*8));
-                palette_data_i += 3;
-            }
+
             refreshEverything();
 
         }
 
-        private void openFileDialog3_FileOk(object sender, CancelEventArgs e)
+        private void ImportGalePaletteopenDialog_FileOk(object sender, CancelEventArgs e)
         {
             //Graphics Gale Palette load
-            tempFolders[2] = Path.GetDirectoryName(openFileDialog3.FileName);
-            string[] text = File.ReadAllLines(openFileDialog3.FileName);
-            for(int i = 3;i<19;i++)
+            tempFolders[2] = Path.GetDirectoryName(ImportGalePaletteopenDialog.FileName);
+            string[] text = File.ReadAllLines(ImportGalePaletteopenDialog.FileName);
+            if(text.Length == 1) {
+                MessageBox.Show("Graphics Gale Palette files are ASCII. The palette file provided doesn't seem to be. Could this be a YY-CHR Palette file instead?", "Invalid Palette File", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
             {
-                string[] colorstring = text[i].Split(' ');
-                int R;
-                int G;
-                int B;
-                Int32.TryParse(colorstring[0], out R);
-                Int32.TryParse(colorstring[1], out G);
-                Int32.TryParse(colorstring[2], out B);
-                if (comboBox1.SelectedIndex == 0)
+                for (int i = 3; i < 19; i++)
                 {
-                    palette[i-3] = Color.FromArgb(((R/16)*16),((G / 16) * 16),((B / 16) * 16));
-                }
-                if (comboBox1.SelectedIndex == 1)
-                {
-                    palette2[i-3] = Color.FromArgb(((R / 16) * 16), ((G / 16) * 16), ((B / 16) * 16));
-                }
-                if (comboBox1.SelectedIndex == 2)
-                {
-                    palette3[i-3] = Color.FromArgb(((R / 16) * 16), ((G / 16) * 16), ((B / 16) * 16));
-                }
-                if (comboBox1.SelectedIndex == 3)
-                {
-                    palette4[i-3] = Color.FromArgb(((R / 16) * 16), ((G / 16) * 16), ((B / 16) * 16));
-                }
+                    string[] colorstring = text[i].Split(' ');
+                    int R;
+                    int G;
+                    int B;
+                    Int32.TryParse(colorstring[0], out R);
+                    Int32.TryParse(colorstring[1], out G);
+                    Int32.TryParse(colorstring[2], out B);
+                    if (comboBox1.SelectedIndex == 0)
+                    {
+                        palette[i - 3] = Color.FromArgb(((R / 16) * 16), ((G / 16) * 16), ((B / 16) * 16));
+                    }
+                    if (comboBox1.SelectedIndex == 1)
+                    {
+                        palette2[i - 3] = Color.FromArgb(((R / 16) * 16), ((G / 16) * 16), ((B / 16) * 16));
+                    }
+                    if (comboBox1.SelectedIndex == 2)
+                    {
+                        palette3[i - 3] = Color.FromArgb(((R / 16) * 16), ((G / 16) * 16), ((B / 16) * 16));
+                    }
+                    if (comboBox1.SelectedIndex == 3)
+                    {
+                        palette4[i - 3] = Color.FromArgb(((R / 16) * 16), ((G / 16) * 16), ((B / 16) * 16));
+                    }
 
+                }
             }
             refreshEverything();
 
 
         }
 
-        private void button7_Click(object sender, EventArgs e)
+        private void exportGalePalette_Click(object sender, EventArgs e)
         {
             if (tempFolders[8] != null)
             {
-                saveFileDialog4.InitialDirectory = tempFolders[8];
+                ExportGalePalettesaveDialog.InitialDirectory = tempFolders[8];
             }
-            saveFileDialog4.ShowDialog();
+            ExportGalePalettesaveDialog.ShowDialog();
         }
 
-        private void saveFileDialog4_FileOk(object sender, CancelEventArgs e)
+        private void ExportGalePalettesaveDialog_FileOk(object sender, CancelEventArgs e)
         {
-            tempFolders[8] = Path.GetDirectoryName(saveFileDialog4.FileName);
+            tempFolders[8] = Path.GetDirectoryName(ExportGalePalettesaveDialog.FileName);
 
             string text = "JASC-PAL\n0100\n16\n";
             
@@ -691,31 +763,31 @@ namespace PaletteCreator
                 }
 
             }
-            File.WriteAllText(saveFileDialog4.FileName, text);
+            File.WriteAllText(ExportGalePalettesaveDialog.FileName, text);
         }
 
-        private void button2_Click_1(object sender, EventArgs e)
+        private void importSPR_Click_1(object sender, EventArgs e)
         {
             if (tempFolders[1] != null)
             {
-                openFileDialog2.InitialDirectory = tempFolders[1];
+                ImportSPRopenDialog.InitialDirectory = tempFolders[1];
             }
-            openFileDialog2.ShowDialog();
+            ImportSPRopenDialog.ShowDialog();
 
         }
 
-        private void button9_Click(object sender, EventArgs e)
+        private void exportPNG_Click(object sender, EventArgs e)
         {
             if (tempFolders[9] != null)
             {
-                saveFileDialog5.InitialDirectory = tempFolders[9];
+                ExportPNGsaveDialog.InitialDirectory = tempFolders[9];
             }
-            saveFileDialog5.ShowDialog();
+            ExportPNGsaveDialog.ShowDialog();
         }
 
-        private void saveFileDialog5_FileOk(object sender, CancelEventArgs e)
+        private void ExportPNGsaveDialog_FileOk(object sender, CancelEventArgs e)
         {
-            tempFolders[9] = Path.GetDirectoryName(saveFileDialog5.FileName);
+            tempFolders[9] = Path.GetDirectoryName(ExportPNGsaveDialog.FileName);
             Bitmap tempBitmap = new Bitmap(128, 448);
             Graphics gg = Graphics.FromImage(tempBitmap);
             for (int i = 0; i < 14; i++)
@@ -724,7 +796,7 @@ namespace PaletteCreator
                 updateGraphic(i);
                 gg.DrawImage(loadedblocks, new Rectangle(0, i * 32, 128, 32), 0, 0, 128, 32, GraphicsUnit.Pixel);
             }
-            tempBitmap.Save(saveFileDialog5.FileName, System.Drawing.Imaging.ImageFormat.Png);
+            tempBitmap.Save(ExportPNGsaveDialog.FileName, System.Drawing.Imaging.ImageFormat.Png);
         }
 
 
@@ -742,7 +814,7 @@ namespace PaletteCreator
             int pix = 0;
             for (int y = 0; y < heightInPixels; y++)
             {
-                byte blue = 0;
+//                byte blue = 0;
                 int currentLine = y * bitmapData.Stride;
                 for (int x = 0; x < widthInBytes; x = x + bytesPerPixel)
                 {
@@ -818,7 +890,7 @@ namespace PaletteCreator
 
         }
 
-        private void button10_Click(object sender, EventArgs e)
+        private void importPNG_Click(object sender, EventArgs e)
         {
             ImporterForm form = new ImporterForm();
             form.ShowDialog();
@@ -829,24 +901,42 @@ namespace PaletteCreator
 
         }
 
-        private void button11_Click(object sender, EventArgs e)
+        // INJECT SPR TO ROM
+        //  Select SPR
+        private void injectROM_Click(object sender, EventArgs e)
         {
-            openFileDialog6.ShowDialog();
+            MessageBox.Show("1. Load SPR\n2. Load ROM\n3. Windows will warn you that the ROM exists. This app will NOT overwrite your ROM file.", "Sprite Injection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            InjectSPRopenDialog.ShowDialog();
         }
         byte[] sprite_data = new byte[0x7078];
-        private void openFileDialog6_FileOk(object sender, CancelEventArgs e)
+
+        // INJECT SPR TO ROM
+        //  Select ROM
+        private void InjectSPRopenDialog_FileOk(object sender, CancelEventArgs e)
         {
             //filestream open .spr file
-            FileStream fs = new FileStream(openFileDialog6.FileName, FileMode.Open, FileAccess.Read);
+            FileStream fs = new FileStream(InjectSPRopenDialog.FileName, FileMode.Open, FileAccess.Read);
             fs.Read(sprite_data,0,0x7078);
             fs.Close();
-            saveFileDialog6.ShowDialog();
+            InjectROMsaveDialog.ShowDialog();
         }
         byte[] rom_patch;
-        private void saveFileDialog6_FileOk(object sender, CancelEventArgs e)
+
+        // INJECT SPR TO ROM
+        //  Write ROM
+        private void InjectROMsaveDialog_FileOk(object sender, CancelEventArgs e)
         {
             //filestream save .spr file
-            FileStream fs = new FileStream(saveFileDialog6.FileName, FileMode.Open, FileAccess.ReadWrite);
+            FileStream fs = new FileStream(InjectROMsaveDialog.FileName, FileMode.Open, FileAccess.ReadWrite);
+            string spriteFullPath = "";
+            string spriteFileName = "MOO";
+            spriteFullPath = InjectSPRopenDialog.FileName;
+            spriteFileName = Path.GetFileName(spriteFullPath);
+            spriteFileName = spriteFileName.Substring(0,spriteFileName.LastIndexOf("."));
+            string destFullPath = InjectROMsaveDialog.FileName;
+            string destFileName = Path.GetFileName(destFullPath);
+            destFullPath = destFullPath.Replace(destFileName, spriteFileName + "-" + destFileName);
+            FileStream dest = new FileStream(destFullPath, FileMode.Create, FileAccess.Write);
             rom_patch = new byte[fs.Length];
             fs.Read(rom_patch, 0, (int)fs.Length);
             fs.Position = 0;
@@ -860,10 +950,12 @@ namespace PaletteCreator
                 rom_patch[0x0DD308 + i] = sprite_data[i+0x7000];
             }
 
-            fs.Write(rom_patch, 0, (int)fs.Length);
+            dest.Write(rom_patch, 0, (int)fs.Length);
 
 
             fs.Close();
+            dest.Close();
         }
+
     }
 }
