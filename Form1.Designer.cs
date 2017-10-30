@@ -65,14 +65,20 @@
             this.InjectSPRopenDialog = new System.Windows.Forms.OpenFileDialog();
             this.InjectROMsaveDialog = new System.Windows.Forms.SaveFileDialog();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.menuFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuFileExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(134, 9);
+            this.label1.Location = new System.Drawing.Point(134, 27);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(85, 13);
             this.label1.TabIndex = 1;
@@ -80,13 +86,13 @@
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(137, 25);
+            this.pictureBox2.Location = new System.Drawing.Point(137, 43);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(512, 32);
             this.pictureBox2.TabIndex = 2;
             this.pictureBox2.TabStop = false;
-            this.pictureBox2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox2_MouseMove);
             this.pictureBox2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox2_MouseDoubleClick);
+            this.pictureBox2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox2_MouseMove);
             // 
             // comboBox1
             // 
@@ -97,7 +103,7 @@
             "Blue Mail",
             "Red Mail",
             "Bunny"});
-            this.comboBox1.Location = new System.Drawing.Point(15, 25);
+            this.comboBox1.Location = new System.Drawing.Point(15, 43);
             this.comboBox1.MaxDropDownItems = 4;
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
@@ -108,7 +114,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 9);
+            this.label2.Location = new System.Drawing.Point(12, 27);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(88, 13);
             this.label2.TabIndex = 4;
@@ -123,6 +129,7 @@
             this.exportYYPalette.Text = "Export YY-CHR Pal";
             this.exportYYPalette.UseVisualStyleBackColor = true;
             this.exportYYPalette.Click += new System.EventHandler(this.exportYYPalette_Click);
+            this.exportYYPalette.MouseEnter += new System.EventHandler(this.exportYYPalette_MouseEnter);
             // 
             // importSPRfromROM
             // 
@@ -133,6 +140,7 @@
             this.importSPRfromROM.Text = "Import ROM";
             this.importSPRfromROM.UseVisualStyleBackColor = true;
             this.importSPRfromROM.Click += new System.EventHandler(this.importSPRfromROM_Click);
+            this.importSPRfromROM.MouseEnter += new System.EventHandler(this.importSPRfromROM_MouseEnter);
             // 
             // ImportROMopenDialog
             // 
@@ -180,6 +188,7 @@
             this.button6.Size = new System.Drawing.Size(90, 35);
             this.button6.TabIndex = 10;
             this.button6.Text = "Export ROM";
+            this.toolTip1.SetToolTip(this.button6, "Use \"Import SPR & Export to ROM\"");
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.ExportROM_Click);
             // 
@@ -213,6 +222,7 @@
             this.exportGalePalette.Text = "Export Graphics Gale Pal";
             this.exportGalePalette.UseVisualStyleBackColor = true;
             this.exportGalePalette.Click += new System.EventHandler(this.exportGalePalette_Click);
+            this.exportGalePalette.MouseEnter += new System.EventHandler(this.exportGalePalette_MouseEnter);
             // 
             // importGalePalette
             // 
@@ -223,6 +233,7 @@
             this.importGalePalette.Text = "Import Graphics Gale Pal";
             this.importGalePalette.UseVisualStyleBackColor = true;
             this.importGalePalette.Click += new System.EventHandler(this.importGalePalette_Click);
+            this.importGalePalette.MouseEnter += new System.EventHandler(this.importGalePalette_MouseEnter);
             // 
             // ImportGalePaletteopenDialog
             // 
@@ -251,6 +262,7 @@
             this.importSPR.Text = "Import SPR";
             this.importSPR.UseVisualStyleBackColor = true;
             this.importSPR.Click += new System.EventHandler(this.importSPR_Click_1);
+            this.importSPR.MouseEnter += new System.EventHandler(this.importSPR_MouseEnter);
             // 
             // openFileDialog5
             // 
@@ -278,7 +290,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(517, 9);
+            this.label4.Location = new System.Drawing.Point(517, 27);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(49, 13);
             this.label4.TabIndex = 16;
@@ -300,13 +312,14 @@
             this.importPNG.Size = new System.Drawing.Size(90, 35);
             this.importPNG.TabIndex = 18;
             this.importPNG.Text = "Import PNG";
+            this.toolTip1.SetToolTip(this.importPNG, "Use ALttPNG on Github");
             this.importPNG.UseVisualStyleBackColor = true;
             this.importPNG.Click += new System.EventHandler(this.importPNG_Click);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(101, 59);
+            this.label5.Location = new System.Drawing.Point(101, 77);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(27, 13);
             this.label5.TabIndex = 19;
@@ -316,7 +329,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(101, 82);
+            this.label6.Location = new System.Drawing.Point(101, 100);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(36, 13);
             this.label6.TabIndex = 20;
@@ -326,7 +339,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(101, 102);
+            this.label7.Location = new System.Drawing.Point(101, 120);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(28, 13);
             this.label7.TabIndex = 21;
@@ -336,7 +349,7 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(137, 127);
+            this.checkBox1.Location = new System.Drawing.Point(137, 145);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(75, 17);
             this.checkBox1.TabIndex = 70;
@@ -365,11 +378,52 @@
             this.InjectROMsaveDialog.Filter = "SNES ROMs|*.sfc";
             this.InjectROMsaveDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.InjectROMsaveDialog_FileOk);
             // 
+            // menuStrip
+            // 
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuFile,
+            this.menuHelp});
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Size = new System.Drawing.Size(719, 24);
+            this.menuStrip.TabIndex = 72;
+            this.menuStrip.Text = "menuStrip1";
+            // 
+            // menuFile
+            // 
+            this.menuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuFileExit});
+            this.menuFile.Name = "menuFile";
+            this.menuFile.Size = new System.Drawing.Size(37, 20);
+            this.menuFile.Text = "File";
+            // 
+            // menuFileExit
+            // 
+            this.menuFileExit.Name = "menuFileExit";
+            this.menuFileExit.Size = new System.Drawing.Size(92, 22);
+            this.menuFileExit.Text = "Exit";
+            this.menuFileExit.Click += new System.EventHandler(this.menuFileExit_Click);
+            // 
+            // menuHelp
+            // 
+            this.menuHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuHelpAbout});
+            this.menuHelp.Name = "menuHelp";
+            this.menuHelp.Size = new System.Drawing.Size(44, 20);
+            this.menuHelp.Text = "Help";
+            // 
+            // menuHelpAbout
+            // 
+            this.menuHelpAbout.Name = "menuHelpAbout";
+            this.menuHelpAbout.Size = new System.Drawing.Size(107, 22);
+            this.menuHelpAbout.Text = "About";
+            this.menuHelpAbout.Click += new System.EventHandler(this.menuHelpAbout_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(720, 616);
+            this.ClientSize = new System.Drawing.Size(719, 611);
             this.Controls.Add(this.injectROM);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label7);
@@ -392,11 +446,15 @@
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.menuStrip);
+            this.MainMenuStrip = this.menuStrip;
             this.Name = "Form1";
             this.Text = "PaletteCreator " + PaletteCreator.Properties.Resources.Version;
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -489,6 +547,11 @@
         private System.Windows.Forms.OpenFileDialog InjectSPRopenDialog;
         private System.Windows.Forms.SaveFileDialog InjectROMsaveDialog;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.MenuStrip menuStrip;
+        private System.Windows.Forms.ToolStripMenuItem menuFile;
+        private System.Windows.Forms.ToolStripMenuItem menuFileExit;
+        private System.Windows.Forms.ToolStripMenuItem menuHelp;
+        private System.Windows.Forms.ToolStripMenuItem menuHelpAbout;
     }
 }
 

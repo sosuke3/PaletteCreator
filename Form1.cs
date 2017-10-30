@@ -351,6 +351,10 @@ namespace PaletteCreator
             ImportROMopenDialog.ShowDialog();
 
         }
+        private void importSPRfromROM_MouseEnter(object sender, EventArgs e)
+        {
+            toolTip1.Show("Import player sprite data from unheadered ROM", importSPRfromROM);
+        }
 
         public Color getColor(short c)
         {
@@ -392,6 +396,10 @@ namespace PaletteCreator
         private void importSPR_Click(object sender, EventArgs e)
         {
             ImportSPRopenDialog.ShowDialog();
+        }
+        private void importSPR_MouseEnter(object sender, EventArgs e)
+        {
+            toolTip1.Show("Import player sprite data from SPR", importSPR);
         }
 
         // IMPORT SPR
@@ -449,6 +457,10 @@ namespace PaletteCreator
                 ExportYYPalettesaveDialog.InitialDirectory = tempFolders[5];
             }
             ExportYYPalettesaveDialog.ShowDialog();
+        }
+        private void exportYYPalette_MouseEnter(object sender, EventArgs e)
+        {
+            toolTip1.Show("Export YY-CHR-formatted palette file\n(this is a binary format and not extensible)", exportYYPalette);
         }
 
         private void ExportYYPalettesaveDialog_FileOk(object sender, CancelEventArgs e)
@@ -632,7 +644,6 @@ namespace PaletteCreator
             }
             ExportROMsaveDialog.ShowDialog();
         }
-
         private void importGalePalette_Click(object sender, EventArgs e)
         {
             if (tempFolders[2] != null)
@@ -640,6 +651,10 @@ namespace PaletteCreator
                 ImportGalePaletteopenDialog.InitialDirectory = tempFolders[2];
             }
             ImportGalePaletteopenDialog.ShowDialog();
+        }
+        private void importGalePalette_MouseEnter(object sender, EventArgs e)
+        {
+            toolTip1.Show("Import Graphics Gale-formatted palette file\n(most ASCII formats should work with this option)", importGalePalette);
         }
 
         private void ImportYYPaletteopenDialog_FileOk(object sender, CancelEventArgs e)
@@ -735,6 +750,10 @@ namespace PaletteCreator
                 ExportGalePalettesaveDialog.InitialDirectory = tempFolders[8];
             }
             ExportGalePalettesaveDialog.ShowDialog();
+        }
+        private void exportGalePalette_MouseEnter(object sender, EventArgs e)
+        {
+            toolTip1.Show("Export Graphics Gale-formatted palette file", exportGalePalette);
         }
 
         private void ExportGalePalettesaveDialog_FileOk(object sender, CancelEventArgs e)
@@ -957,5 +976,16 @@ namespace PaletteCreator
             dest.Close();
         }
 
+        private void menuFileExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void menuHelpAbout_Click(object sender, EventArgs e)
+        {
+            AboutBox1 a = new AboutBox1();
+            a.Show();
+        }
+        
     }
 }

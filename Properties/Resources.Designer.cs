@@ -61,7 +61,7 @@ namespace PaletteCreator.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 3.7.
+        ///   Looks up a localized string similar to 4.0.
         /// </summary>
         internal static string Version {
             get {
