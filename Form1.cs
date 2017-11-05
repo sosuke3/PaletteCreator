@@ -27,21 +27,6 @@ namespace PaletteCreator
         private void Form1_Load(object sender, EventArgs e)
         {
 
-            /*   if (File.Exists("folderstemp.txt"))
-               {
-                   tempFolders = File.ReadAllLines("folderstemp.txt");
-                   ImportROMopenDialog.InitialDirectory = tempFolders[0];
-                   ImportSPRopenDialog.InitialDirectory = tempFolders[1];
-                   ImportGalePaletteopenDialog.InitialDirectory = tempFolders[2];
-                   ImportYYPaletteopenDialog.InitialDirectory = tempFolders[3];
-                   openFileDialog5.InitialDirectory = tempFolders[4];
-                   ExportYYPalettesaveDialog.InitialDirectory = tempFolders[5];
-                   ExportSPRsaveDialog.InitialDirectory = tempFolders[6];
-                   ExportROMsaveDialog.InitialDirectory = tempFolders[7];
-                   ExportGalePalettesaveDialog.InitialDirectory = tempFolders[8];
-                   ExportPNGsaveDialog.InitialDirectory = tempFolders[9];
-               }*/
-
             for (int i = 0; i < 16; i++)
             {
                 palette[i] = Color.FromArgb(i * 15, i * 15, i * 15);
@@ -50,10 +35,7 @@ namespace PaletteCreator
                 palette4[i] = Color.FromArgb(i * 15, i * 15, i * 15);
             }
             pictureBox1.Image = new Bitmap(512, 1024);
-            data = new byte[0x7000];/*
-            FileStream fs = new FileStream("sprites/zelda.spr", FileMode.OpenOrCreate, FileAccess.Read);
-            fs.Read(data, 0, 0x7000);
-            fs.Close();*/
+            data = new byte[0x7000];
             
             refreshEverything();
 
@@ -93,12 +75,6 @@ namespace PaletteCreator
                 load4bpp(i);
                 updateGraphic(i);
             }
-            //;
-            //updateGraphic(i);
-
-            //Graphics gp = Graphics.FromImage(pictureBox1.Image);
-            //gp.Clear(Color.Black);
-            
 
         }
 
@@ -143,59 +119,11 @@ namespace PaletteCreator
 
                         }
                     }
-                    // pos++;
                 }
             }
 
 
         }
-
-
-
-
-       /* public void load4bpp(int pos = 0)
-        {
-
-            for (int j = 0; j < 4; j++) //4 par y
-            {
-                for (int i = 0; i < 16; i++)
-                {
-                    int offset = (hexOffset + (pos * 0x800)) + ((j * 32) * 16) + (i * 32);
-                    for (int x = 0; x < 8; x++)
-                    {
-                        for (int y = 0; y < 8; y++)
-                        {
-                            byte tmpbyte = 0;
-
-                            if ((data[offset + (x * 2)] & positions[y]) == positions[y])
-                            {
-                                tmpbyte += 1;
-                            }
-                            if ((data[offset + (x * 2) + 1] & positions[y]) == positions[y])
-                            {
-                                tmpbyte += 2;
-                            }
-
-                            if ((data[offset + 16 + (x * 2)] & positions[y]) == positions[y])
-                            {
-                                tmpbyte += 4;
-                            }
-                            if ((data[offset + 16 + (x * 2) + 1] & positions[y]) == positions[y])
-                            {
-                                tmpbyte += 8;
-                            }
-
-                            imgdata[y + (i * 8), x + (j * 8)] = tmpbyte;
-
-                        }
-                    }
-                    // pos++;
-                }
-            }
-
-
-        }*/
-
 
         Bitmap loadedblocks = new Bitmap(128, 32);
         byte[] bitmap_data = new byte[4096 * 3];
@@ -214,37 +142,14 @@ namespace PaletteCreator
 
                     bitmap_data[bitmap_pos] = imgdata[x, y];
                     bitmap_data[bitmap_pos + 1] = imgdata[x, y];
-                        bitmap_data[bitmap_pos + 2] = imgdata[x, y];
-                        bitmap_pos += 3;
-                    
-                     /*if (comboBox1.SelectedIndex == 1)
-                     {
-                        bitmap_data[bitmap_pos] = palette2[imgdata[x, y]].B;
-                        bitmap_data[bitmap_pos + 1] = palette2[imgdata[x, y]].G;
-                        bitmap_data[bitmap_pos + 2] = palette2[imgdata[x, y]].R;
-                        bitmap_pos += 3;
-                    }
-                     if (comboBox1.SelectedIndex == 2)
-                     {
-                        bitmap_data[bitmap_pos] = palette3[imgdata[x, y]].B;
-                        bitmap_data[bitmap_pos + 1] = palette3[imgdata[x, y]].G;
-                        bitmap_data[bitmap_pos + 2] = palette3[imgdata[x, y]].R;
-                        bitmap_pos += 3;
-                    }
-                     if (comboBox1.SelectedIndex == 3)
-                     {
-                        bitmap_data[bitmap_pos] = palette4[imgdata[x, y]].B;
-                        bitmap_data[bitmap_pos + 1] = palette4[imgdata[x, y]].G;
-                        bitmap_data[bitmap_pos + 2] = palette4[imgdata[x, y]].R;
-                        bitmap_pos += 3;
-                    }*/
+                    bitmap_data[bitmap_pos + 2] = imgdata[x, y];
+                    bitmap_pos += 3;
                 }
             }
             //
             Graphics gx = Graphics.FromImage(loadedblocks);
             gx.Clear(Color.Black);
             ProcessUsingLockbits((Bitmap)loadedblocks);
-            //g.FillRectangle(Brushes.Fuchsia, new Rectangle(0, pos * 32, 128, 32));
             if (pos >= 7)
             {
                 g.DrawImage(loadedblocks, new Rectangle(255, (pos-7) * 63, 256, 64), 0, 0, 128, 32, GraphicsUnit.Pixel);
@@ -377,10 +282,7 @@ namespace PaletteCreator
             {
                 data[i] = ROM_DATA[0x80000 + i];
             }
-
-            //palettes[0] = new Palette(0x0DD308, 15);
-            //palettes[1] = new Palette(0x0DD326, 15);
-            //palettes[2] = new Palette(0x0DD344, 15);
+            
             for (int i = 0;i<15;i++)
             {
                 palette[i + 1] = getColor((short)((ROM_DATA[0x0DD308 + (i * 2)+1] << 8) + (ROM_DATA[0x0DD308 + (i * 2)])));
@@ -615,10 +517,6 @@ namespace PaletteCreator
                     palette_data_i += 2;
                 }
                 data = new byte[0x7000 + 0x78];
-                for (int i = 0; i < 0x7000; i++)
-                {
-                    //data[i] = ROM_DATA[0x80000 + i];
-                }
                 for (int i = 0; i < 120; i++)
                 {
                     ROM_DATA[0x0DD308+i] = palette_data[i];
@@ -868,11 +766,6 @@ namespace PaletteCreator
                     }
 
                     pix += 3;
-                    //Console.Write(currentLine + ",");
-                    /*pixels[currentLine + x] = blue;
-                    pixels[currentLine + x + 1] = blue;
-                     pixels[currentLine + x + 2] = blue;
-                    blue++;*/
                 }
                 
             }
