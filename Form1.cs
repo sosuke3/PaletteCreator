@@ -383,11 +383,15 @@ namespace PaletteCreator
             //palettes[2] = new Palette(0x0DD344, 15);
             for (int i = 0;i<15;i++)
             {
-                palette[i+1] = getColor((short)((ROM_DATA[0x0DD308 + (i * 2)+1] << 8) + (ROM_DATA[0x0DD308 + (i * 2)])));
+                palette[i + 1] = getColor((short)((ROM_DATA[0x0DD308 + (i * 2)+1] << 8) + (ROM_DATA[0x0DD308 + (i * 2)])));
                 palette2[i + 1] = getColor((short)((ROM_DATA[0x0DD326 + (i * 2) + 1] << 8) + (ROM_DATA[0x0DD326 + (i * 2)])));
                 palette3[i + 1] = getColor((short)((ROM_DATA[0x0DD344 + (i * 2) + 1] << 8) + (ROM_DATA[0x0DD344 + (i * 2)])));
                 palette4[i + 1] = getColor((short)((ROM_DATA[0x0DD362 + (i * 2) + 1] << 8) + (ROM_DATA[0x0DD362 + (i * 2)])));
             }
+
+            // extract custom gloves colors
+            palette2[0xD] = getColor((short)((ROM_DATA[0xDEDF5] | (ROM_DATA[0xDEDF6] << 8))));
+            palette3[0xD] = getColor((short)((ROM_DATA[0xDEDF7] | (ROM_DATA[0xDEDF8] << 8))));
             refreshEverything();
             
         }
@@ -964,6 +968,32 @@ namespace PaletteCreator
             {
                 rom_patch[0x80000 + i] = sprite_data[i];
             }
+
+            // Check to see if blue and red mails have different hand colors from green mail
+            // if they do, assume they are custom glove colors and overwrite glove change
+            // if they don't, skip this step so we don't overwrite vanilla glove change
+            if (sprite_data[0x7036] == sprite_data[0x7018] 
+                && sprite_data[0x7037] == sprite_data[0x7019] 
+                && sprite_data[0x7054] == sprite_data[0x7018] 
+                && sprite_data[0x7055] == sprite_data[0x7019])
+            {
+                // Do nothing
+            }
+            else
+            {
+                // patch custom gloves colors first
+                rom_patch[0xDEDF5] = sprite_data[0x7036];
+                rom_patch[0xDEDF6] = sprite_data[0x7037];
+                rom_patch[0xDEDF7] = sprite_data[0x7054];
+                rom_patch[0xDEDF8] = sprite_data[0x7055];
+
+                // reset red and blue mail gloves to green mail's color
+                sprite_data[0x7036] = sprite_data[0x7018];
+                sprite_data[0x7037] = sprite_data[0x7019];
+                sprite_data[0x7054] = sprite_data[0x7018];
+                sprite_data[0x7055] = sprite_data[0x7019];
+            }
+
             for (int i = 0; i < 0x78; i++)
             {
                 rom_patch[0x0DD308 + i] = sprite_data[i+0x7000];
