@@ -19,7 +19,7 @@ namespace PaletteCreator
         {
             InitializeComponent();
         }
-        Color[] palette = new Color[17];
+        Color[] palette  = new Color[17];
         Color[] palette2 = new Color[17];
         Color[] palette3 = new Color[17];
         Color[] palette4 = new Color[17];
@@ -29,7 +29,7 @@ namespace PaletteCreator
 
             for (int i = 0; i < 16; i++)
             {
-                palette[i] = Color.FromArgb(i * 15, i * 15, i * 15);
+                palette[i]  = Color.FromArgb(i * 15, i * 15, i * 15);
                 palette2[i] = Color.FromArgb(i * 15, i * 15, i * 15);
                 palette3[i] = Color.FromArgb(i * 15, i * 15, i * 15);
                 palette4[i] = Color.FromArgb(i * 15, i * 15, i * 15);
@@ -52,7 +52,7 @@ namespace PaletteCreator
             {
                 if (comboBox1.SelectedIndex == 0)
                 {
-                    g.FillRectangle(new SolidBrush(palette[i]), new Rectangle(i * 32, 0, (i * 32) + 32, 32));
+                    g.FillRectangle(new SolidBrush(palette[i]),  new Rectangle(i * 32, 0, (i * 32) + 32, 32));
                 }
                 if (comboBox1.SelectedIndex == 1)
                 {
@@ -126,21 +126,21 @@ namespace PaletteCreator
         }
 
         Bitmap loadedblocks = new Bitmap(128, 32);
-        byte[] bitmap_data = new byte[4096 * 3];
+        byte[] bitmap_data  = new byte[4096 * 3];
         public void updateGraphic(int pos)
         {
             
-            Graphics g = Graphics.FromImage(pictureBox1.Image);
+            Graphics g          = Graphics.FromImage(pictureBox1.Image);
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
-            int bitmap_pos = 0;
+            g.SmoothingMode     = System.Drawing.Drawing2D.SmoothingMode.None;
+            int bitmap_pos      = 0;
 
                 for (int y = 0; y < 32; y++)
                 {
                 for (int x = 0; x < 128; x++)
                 {
 
-                    bitmap_data[bitmap_pos] = imgdata[x, y];
+                    bitmap_data[bitmap_pos + 0] = imgdata[x, y];
                     bitmap_data[bitmap_pos + 1] = imgdata[x, y];
                     bitmap_data[bitmap_pos + 2] = imgdata[x, y];
                     bitmap_pos += 3;
@@ -152,11 +152,11 @@ namespace PaletteCreator
             ProcessUsingLockbits((Bitmap)loadedblocks);
             if (pos >= 7)
             {
-                g.DrawImage(loadedblocks, new Rectangle(255, (pos-7) * 63, 256, 64), 0, 0, 128, 32, GraphicsUnit.Pixel);
+                g.DrawImage(loadedblocks, new Rectangle(255, (pos - 7) * 63, 256, 64), 0, 0, 128, 32, GraphicsUnit.Pixel);
             }
             else
             {
-                g.DrawImage(loadedblocks, new Rectangle(0, pos * 63, 256, 64), 0, 0, 128, 32, GraphicsUnit.Pixel);
+                g.DrawImage(loadedblocks, new Rectangle(  0, (pos - 0) * 63, 256, 64), 0, 0, 128, 32, GraphicsUnit.Pixel);
             }
             
             
@@ -272,8 +272,8 @@ namespace PaletteCreator
         {
 
             tempFolders[0] = Path.GetDirectoryName(ImportROMopenDialog.FileName);
-            FileStream fs = new FileStream(ImportROMopenDialog.FileName, FileMode.Open, FileAccess.Read);
-            ROM_DATA = new byte[(int)fs.Length];
+            FileStream fs  = new FileStream(ImportROMopenDialog.FileName, FileMode.Open, FileAccess.Read);
+            ROM_DATA       = new byte[(int)fs.Length];
             fs.Read(ROM_DATA, 0, (int)fs.Length);
          
             fs.Close();
@@ -285,7 +285,7 @@ namespace PaletteCreator
             
             for (int i = 0;i<15;i++)
             {
-                palette[i + 1] = getColor((short)((ROM_DATA[0x0DD308 + (i * 2)+1] << 8) + (ROM_DATA[0x0DD308 + (i * 2)])));
+                palette[ i + 1] = getColor((short)((ROM_DATA[0x0DD308 + (i * 2) + 1] << 8) + (ROM_DATA[0x0DD308 + (i * 2)])));
                 palette2[i + 1] = getColor((short)((ROM_DATA[0x0DD326 + (i * 2) + 1] << 8) + (ROM_DATA[0x0DD326 + (i * 2)])));
                 palette3[i + 1] = getColor((short)((ROM_DATA[0x0DD344 + (i * 2) + 1] << 8) + (ROM_DATA[0x0DD344 + (i * 2)])));
                 palette4[i + 1] = getColor((short)((ROM_DATA[0x0DD362 + (i * 2) + 1] << 8) + (ROM_DATA[0x0DD362 + (i * 2)])));
@@ -312,24 +312,24 @@ namespace PaletteCreator
         private void ImportSPRopenDialog_FileOk(object sender, CancelEventArgs e)
         {
             tempFolders[1] = Path.GetDirectoryName(ImportSPRopenDialog.FileName);
-            ROM_DATA = new byte[2097152];
-            FileStream fs = new FileStream(ImportSPRopenDialog.FileName, FileMode.Open, FileAccess.Read);
-            data = new byte[fs.Length];
+            ROM_DATA       = new byte[2097152];
+            FileStream fs  = new FileStream(ImportSPRopenDialog.FileName, FileMode.Open, FileAccess.Read);
+            data           = new byte[fs.Length];
             fs.Read(data, 0, (int)fs.Length);
 
             
 
             if (fs.Length == 0x7078)
             {
-                for(int i = 0;i<0x7000;i++)
+                for(int i = 0; i < 0x7000; i++)
                 {
-                    ROM_DATA[0x80000+i] = data[i];
+                    ROM_DATA[0x80000 + i] = data[i];
                 }
 
 
                 for (int i = 0; i < 15; i++)
                 {
-                    palette[i + 1] = getColor((short)((data[0x7000 + (i * 2) + 1] << 8) + (data[0x7000 + (i * 2)])));
+                    palette[ i + 1] = getColor((short)((data[0x7000 +  0 + (i * 2) + 1] << 8) + (data[0x7000 +  0 + (i * 2)])));
                 }
                 for (int i = 0; i < 15; i++)
                 {
@@ -377,28 +377,28 @@ namespace PaletteCreator
             int palette_data_i = 0;
             for (int i = 0; i < 16; i++)
             {
-                palette_data[palette_data_i] = palette[i].R;
+                palette_data[palette_data_i + 0] = palette[i].R;
                 palette_data[palette_data_i + 1] = palette[i].G;
                 palette_data[palette_data_i + 2] = palette[i].B;
                 palette_data_i += 3;
             }
             for (int i = 0; i < 16; i++)
             {
-                palette_data[palette_data_i] = palette2[i].R;
+                palette_data[palette_data_i + 0] = palette2[i].R;
                 palette_data[palette_data_i + 1] = palette2[i].G;
                 palette_data[palette_data_i + 2] = palette2[i].B;
                 palette_data_i += 3;
             }
             for (int i = 0; i < 16; i++)
             {
-                palette_data[palette_data_i] = palette3[i].R;
+                palette_data[palette_data_i + 0] = palette3[i].R;
                 palette_data[palette_data_i + 1] = palette3[i].G;
                 palette_data[palette_data_i + 2] = palette3[i].B;
                 palette_data_i += 3;
             }
             for (int i = 0; i < 16; i++)
             {
-                palette_data[palette_data_i] = palette4[i].R;
+                palette_data[palette_data_i + 0] = palette4[i].R;
                 palette_data[palette_data_i + 1] = palette4[i].G;
                 palette_data[palette_data_i + 2] = palette4[i].B;
                 palette_data_i += 3;
@@ -436,7 +436,7 @@ namespace PaletteCreator
             if (ROM_DATA != null)
             {
                 byte[] palette_data = new byte[0x78];
-                int palette_data_i = 0;
+                int palette_data_i  = 0;
                 for (int i = 0; i < 15; i++)
                 {
                     short s = (short)(((palette[i + 1].B / 8) << 10) | ((palette[i + 1].G / 8) << 5) | ((palette[i + 1].R / 8)));
@@ -466,7 +466,7 @@ namespace PaletteCreator
                     palette_data_i += 2;
                 }
                 data = new byte[0x7000 + 0x78];
-                for (int i = 0;i<0x7000;i++)
+                for (int i = 0; i < 0x7000; i++)
                 {
                     data[i] = ROM_DATA[0x80000 + i];
                 }
@@ -519,7 +519,7 @@ namespace PaletteCreator
                 data = new byte[0x7000 + 0x78];
                 for (int i = 0; i < 120; i++)
                 {
-                    ROM_DATA[0x0DD308+i] = palette_data[i];
+                    ROM_DATA[0x0DD308 + i] = palette_data[i];
                 }
 
                 FileStream fs = new FileStream(ExportROMsaveDialog.FileName, FileMode.OpenOrCreate, FileAccess.Write);
@@ -564,8 +564,8 @@ namespace PaletteCreator
             tempFolders[3] = Path.GetDirectoryName(ImportYYPaletteopenDialog.FileName);
             File.WriteAllLines("folderstemp.txt", tempFolders);
             byte[] palette_data = new byte[0x300];
-            string[] text = File.ReadAllLines(ImportYYPaletteopenDialog.FileName);
-            FileStream fs = new FileStream(ImportYYPaletteopenDialog.FileName, FileMode.OpenOrCreate, FileAccess.Read);
+            string[] text       = File.ReadAllLines(ImportYYPaletteopenDialog.FileName);
+            FileStream fs       = new FileStream(ImportYYPaletteopenDialog.FileName, FileMode.OpenOrCreate, FileAccess.Read);
             fs.Read(palette_data, 0, 0x300);
             fs.Close();
 
@@ -578,7 +578,7 @@ namespace PaletteCreator
                 int palette_data_i = 0;
                 for (int i = 0; i < 16; i++)
                 {
-                    palette[i] = Color.FromArgb(((palette_data[palette_data_i] / 8) * 8), ((palette_data[palette_data_i + 1] / 8) * 8), ((palette_data[palette_data_i + 2] / 8) * 8));
+                    palette[ i] = Color.FromArgb(((palette_data[palette_data_i] / 8) * 8), ((palette_data[palette_data_i + 1] / 8) * 8), ((palette_data[palette_data_i + 2] / 8) * 8));
                     palette_data_i += 3;
                 }
                 for (int i = 0; i < 16; i++)
@@ -606,7 +606,7 @@ namespace PaletteCreator
         {
             //Graphics Gale Palette load
             tempFolders[2] = Path.GetDirectoryName(ImportGalePaletteopenDialog.FileName);
-            string[] text = File.ReadAllLines(ImportGalePaletteopenDialog.FileName);
+            string[] text  = File.ReadAllLines(ImportGalePaletteopenDialog.FileName);
             if(text.Length == 1) {
                 MessageBox.Show("Graphics Gale Palette files are ASCII. The palette file provided doesn't seem to be. Could this be a YY-CHR Palette file instead?", "Invalid Palette File", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -623,7 +623,7 @@ namespace PaletteCreator
                     Int32.TryParse(colorstring[2], out B);
                     if (comboBox1.SelectedIndex == 0)
                     {
-                        palette[i - 3] = Color.FromArgb(((R / 16) * 16), ((G / 16) * 16), ((B / 16) * 16));
+                        palette[ i - 3] = Color.FromArgb(((R / 16) * 16), ((G / 16) * 16), ((B / 16) * 16));
                     }
                     if (comboBox1.SelectedIndex == 1)
                     {
@@ -668,7 +668,7 @@ namespace PaletteCreator
             {
                 if (comboBox1.SelectedIndex == 0)
                 {
-                    text += palette[i].R.ToString() + " " + palette[i].G.ToString() + " " + palette[i].B.ToString() + "\n";
+                    text += palette[ i].R.ToString() + " " + palette[ i].G.ToString() + " " + palette[ i].B.ToString() + "\n";
                 }
                 if (comboBox1.SelectedIndex == 1)
                 {
@@ -708,9 +708,9 @@ namespace PaletteCreator
 
         private void ExportPNGsaveDialog_FileOk(object sender, CancelEventArgs e)
         {
-            tempFolders[9] = Path.GetDirectoryName(ExportPNGsaveDialog.FileName);
+            tempFolders[9]    = Path.GetDirectoryName(ExportPNGsaveDialog.FileName);
             Bitmap tempBitmap = new Bitmap(128, 448);
-            Graphics gg = Graphics.FromImage(tempBitmap);
+            Graphics gg       = Graphics.FromImage(tempBitmap);
             for (int i = 0; i < 14; i++)
             {
                 load4bpp(i);
@@ -725,13 +725,13 @@ namespace PaletteCreator
         {
             BitmapData bitmapData = processedBitmap.LockBits(new Rectangle(0, 0, processedBitmap.Width, processedBitmap.Height), ImageLockMode.ReadWrite, processedBitmap.PixelFormat);
 
-            int bytesPerPixel = Bitmap.GetPixelFormatSize(processedBitmap.PixelFormat) / 8;
-            int byteCount = bitmapData.Stride * processedBitmap.Height;
-            byte[] pixels = new byte[byteCount];
+            int bytesPerPixel    = Bitmap.GetPixelFormatSize(processedBitmap.PixelFormat) / 8;
+            int byteCount        = bitmapData.Stride * processedBitmap.Height;
+            byte[] pixels        = new byte[byteCount];
             IntPtr ptrFirstPixel = bitmapData.Scan0;
             Marshal.Copy(ptrFirstPixel, pixels, 0, pixels.Length);
-            int heightInPixels = bitmapData.Height;
-            int widthInBytes = bitmapData.Width * bytesPerPixel;
+            int heightInPixels   = bitmapData.Height;
+            int widthInBytes     = bitmapData.Width * bytesPerPixel;
             int pix = 0;
             for (int y = 0; y < heightInPixels; y++)
             {
@@ -742,25 +742,25 @@ namespace PaletteCreator
                     // calculate new pixel value
                     if (selected_palette == 0)
                     {
-                        pixels[currentLine + x] = palette[bitmap_data[pix]].B;
+                        pixels[currentLine + x + 0] = palette[bitmap_data[pix + 0]].B;
                         pixels[currentLine + x + 1] = palette[bitmap_data[pix+1]].G;
                         pixels[currentLine + x + 2] = palette[bitmap_data[pix+2]].R;
                     }
                     else if (selected_palette == 1)
                     {
-                        pixels[currentLine + x] = palette2[bitmap_data[pix]].B;
+                        pixels[currentLine + x + 0] = palette2[bitmap_data[pix + 0]].B;
                         pixels[currentLine + x + 1] = palette2[bitmap_data[pix + 1]].G;
                         pixels[currentLine + x + 2] = palette2[bitmap_data[pix + 2]].R;
                     }
                     else if (selected_palette == 2)
                     {
-                        pixels[currentLine + x] = palette3[bitmap_data[pix]].B;
+                        pixels[currentLine + x + 0] = palette3[bitmap_data[pix + 0]].B;
                         pixels[currentLine + x + 1] = palette3[bitmap_data[pix + 1]].G;
                         pixels[currentLine + x + 2] = palette3[bitmap_data[pix + 2]].R;
                     }
                     else if (selected_palette == 3)
                     {
-                        pixels[currentLine + x] = palette4[bitmap_data[pix]].B;
+                        pixels[currentLine + x + 0] = palette4[bitmap_data[pix + 0]].B;
                         pixels[currentLine + x + 1] = palette4[bitmap_data[pix + 1]].G;
                         pixels[currentLine + x + 2] = palette4[bitmap_data[pix + 2]].R;
                     }
@@ -843,21 +843,21 @@ namespace PaletteCreator
         private void InjectROMsaveDialog_FileOk(object sender, CancelEventArgs e)
         {
             //filestream save .spr file
-            FileStream fs = new FileStream(InjectROMsaveDialog.FileName, FileMode.Open, FileAccess.ReadWrite);
+            FileStream fs         = new FileStream(InjectROMsaveDialog.FileName, FileMode.Open, FileAccess.ReadWrite);
             string spriteFullPath = "";
             string spriteFileName = "MOO";
-            spriteFullPath = InjectSPRopenDialog.FileName;
-            spriteFileName = Path.GetFileName(spriteFullPath);
-            spriteFileName = spriteFileName.Substring(0,spriteFileName.LastIndexOf("."));
-            string destFullPath = InjectROMsaveDialog.FileName;
-            string destFileName = Path.GetFileName(destFullPath);
-            destFullPath = destFullPath.Replace(destFileName, spriteFileName + "-" + destFileName);
-            FileStream dest = new FileStream(destFullPath, FileMode.Create, FileAccess.Write);
-            rom_patch = new byte[fs.Length];
+            spriteFullPath        = InjectSPRopenDialog.FileName;
+            spriteFileName        = Path.GetFileName(spriteFullPath);
+            spriteFileName        = spriteFileName.Substring(0,spriteFileName.LastIndexOf("."));
+            string destFullPath   = InjectROMsaveDialog.FileName;
+            string destFileName   = Path.GetFileName(destFullPath);
+            destFullPath          = destFullPath.Replace(destFileName, spriteFileName + "-" + destFileName);
+            FileStream dest       = new FileStream(destFullPath, FileMode.Create, FileAccess.Write);
+            rom_patch             = new byte[fs.Length];
             fs.Read(rom_patch, 0, (int)fs.Length);
             fs.Position = 0;
 
-            for(int i = 0;i<0x7000;i++)
+            for(int i = 0; i < 0x7000; i++)
             {
                 rom_patch[0x80000 + i] = sprite_data[i];
             }
@@ -865,7 +865,7 @@ namespace PaletteCreator
             // Check to see if blue and red mails have different hand colors from green mail
             // if they do, assume they are custom glove colors and overwrite glove change
             // if they don't, skip this step so we don't overwrite vanilla glove change
-            if (sprite_data[0x7036] == sprite_data[0x7018] 
+            if (   sprite_data[0x7036] == sprite_data[0x7018] 
                 && sprite_data[0x7037] == sprite_data[0x7019] 
                 && sprite_data[0x7054] == sprite_data[0x7018] 
                 && sprite_data[0x7055] == sprite_data[0x7019])
