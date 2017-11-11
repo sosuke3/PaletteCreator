@@ -38,7 +38,10 @@ namespace PaletteCreator
             InitializeComponent();
 
             this.Text += $" - {ProductVersion}";
+
             colorDialog1.FullOpen = true;
+
+            ImportSPRopenDialog.Filter = "Sprite Files (*.zspr;*.spr)|*.zspr;*.spr|All Files (*.*)|*.*";
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -351,24 +354,36 @@ namespace PaletteCreator
 
             // TODO: remove "data"
             Array.Copy(spr.PixelData, data, spr.PixelDataLength);
-            //Array.Copy(spr.PaletteData, 0, data, spr.PixelDataLength, spr.PaletteDataLength);
 
-            CopyColorArrayToSpritePalette(spr.GreenMailPalette, palette);
-            CopyColorArrayToSpritePalette(spr.BlueMailPalette, palette2);
-            CopyColorArrayToSpritePalette(spr.RedMailPalette, palette3);
-            CopyColorArrayToSpritePalette(spr.BunnyPalette, palette4);
+            CopySpritePaletteToColorArray(spr.GreenMailPalette, palette);
+            CopySpritePaletteToColorArray(spr.BlueMailPalette, palette2);
+            CopySpritePaletteToColorArray(spr.RedMailPalette, palette3);
+            CopySpritePaletteToColorArray(spr.BunnyPalette, palette4);
 
             refreshEverything();
         }
 
-        void CopyColorArrayToSpritePalette(SpriteLibrary.Palette spritePal, Color[] colorPal)
+        void CopySpritePaletteToColorArray(SpriteLibrary.Palette spritePal, Color[] colorPal)
         {
-            if(spritePal.Length != colorPal.Length)
+            if (spritePal.Length > colorPal.Length)
             {
                 throw new Exception("Palette from sprite is wrong length! Cannot copy to UI palette.");
             }
 
-            for(int i=0; i<colorPal.Length; i++)
+            for (int i = 0; i < spritePal.Length; i++)
+            {
+                colorPal[i] = spritePal[i];
+            }
+        }
+
+        void CopyColorArrayToSpritePalette(Color[] colorPal, SpriteLibrary.Palette spritePal)
+        {
+            if(spritePal.Length > colorPal.Length)
+            {
+                throw new Exception("Palette from sprite is wrong length! Cannot copy to UI palette.");
+            }
+
+            for(int i=0; i<spritePal.Length; i++)
             {
                 spritePal[i] = colorPal[i];
             }
