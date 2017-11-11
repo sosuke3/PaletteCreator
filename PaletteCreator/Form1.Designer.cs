@@ -67,6 +67,7 @@
             this.menuFileExit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportOldSprFormatButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip.SuspendLayout();
@@ -387,11 +388,22 @@
             this.menuHelpAbout.Text = "About";
             this.menuHelpAbout.Click += new System.EventHandler(this.menuHelpAbout_Click);
             // 
+            // exportOldSprFormatButton
+            // 
+            this.exportOldSprFormatButton.Location = new System.Drawing.Point(617, 517);
+            this.exportOldSprFormatButton.Name = "exportOldSprFormatButton";
+            this.exportOldSprFormatButton.Size = new System.Drawing.Size(90, 35);
+            this.exportOldSprFormatButton.TabIndex = 73;
+            this.exportOldSprFormatButton.Text = "Export Old Format SPR";
+            this.exportOldSprFormatButton.UseVisualStyleBackColor = true;
+            this.exportOldSprFormatButton.Click += new System.EventHandler(this.exportOldSprFormatButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(719, 611);
+            this.Controls.Add(this.exportOldSprFormatButton);
             this.Controls.Add(this.injectROM);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.importPNG);
@@ -514,6 +526,7 @@
         private System.Windows.Forms.ToolStripMenuItem menuFileExit;
         private System.Windows.Forms.ToolStripMenuItem menuHelp;
         private System.Windows.Forms.ToolStripMenuItem menuHelpAbout;
+        private System.Windows.Forms.Button exportOldSprFormatButton;
     }
 }
 

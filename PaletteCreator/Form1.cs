@@ -1072,5 +1072,73 @@ namespace PaletteCreator
             a.Show();
         }
 
+        private void exportOldSprFormatButton_Click(object sender, EventArgs e)
+        {
+            if(ROM_DATA == null)
+            {
+                MessageBox.Show("You need to load something before you can save it");
+                return;
+            }
+
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Old Sprite File (*.spr)|*.spr|All Files (*.*)|*.*";
+            if(sfd.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            tempFolders[6] = Path.GetDirectoryName(sfd.FileName);
+
+            byte[] palette_data = new byte[0x78];
+            int palette_data_i = 0;
+
+            for (int i = 0; i < 15; i++)
+            {
+                short s = (short)(((palette[i + 1].B / 8) << 10) | ((palette[i + 1].G / 8) << 5) | ((palette[i + 1].R / 8)));
+                palette_data[palette_data_i] = (byte)(s & 0x00FF);
+                palette_data[palette_data_i + 1] = (byte)((s >> 8) & 0x00FF);
+                palette_data_i += 2;
+            }
+
+            for (int i = 0; i < 15; i++)
+            {
+                short s = (short)(((palette2[i + 1].B / 8) << 10) | ((palette2[i + 1].G / 8) << 5) | ((palette2[i + 1].R / 8)));
+                palette_data[palette_data_i] = (byte)(s & 0x00FF);
+                palette_data[palette_data_i + 1] = (byte)((s >> 8) & 0x00FF);
+                palette_data_i += 2;
+            }
+
+            for (int i = 0; i < 15; i++)
+            {
+                short s = (short)(((palette3[i + 1].B / 8) << 10) | ((palette3[i + 1].G / 8) << 5) | ((palette3[i + 1].R / 8)));
+                palette_data[palette_data_i] = (byte)(s & 0x00FF);
+                palette_data[palette_data_i + 1] = (byte)((s >> 8) & 0x00FF);
+                palette_data_i += 2;
+            }
+
+            for (int i = 0; i < 15; i++)
+            {
+                short s = (short)(((palette4[i + 1].B / 8) << 10) | ((palette4[i + 1].G / 8) << 5) | ((palette4[i + 1].R / 8)));
+                palette_data[palette_data_i] = (byte)(s & 0x00FF);
+                palette_data[palette_data_i + 1] = (byte)((s >> 8) & 0x00FF);
+                palette_data_i += 2;
+            }
+
+            data = new byte[0x7000 + 0x78];
+
+            for (int i = 0; i < 0x7000; i++)
+            {
+                data[i] = ROM_DATA[0x80000 + i];
+            }
+
+            for (int i = 0; i < 0x78; i++)
+            {
+                data[0x7000 + i] = palette_data[i];
+            }
+
+            FileStream fs = new FileStream(sfd.FileName, FileMode.OpenOrCreate, FileAccess.Write);
+            fs.Write(data, 0, 0x7000 + 0x78);
+            fs.Close();
+        }
     }
 }
