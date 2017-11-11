@@ -215,6 +215,10 @@ namespace PaletteCreator
 
             refreshEverything();
         }
+        private void pictureBox2_MouseLeave(object sender, EventArgs e)
+        {
+            toolTip1.Hide(pictureBox2);
+        }
 
         private void pictureBox2_MouseDoubleClick(object sender, MouseEventArgs e)
         {
@@ -278,6 +282,7 @@ namespace PaletteCreator
             
             ImportROMopenDialog.ShowDialog();
         }
+
         private void importSPRfromROM_MouseEnter(object sender, EventArgs e)
         {
             toolTip1.Show("Import player sprite data from unheadered ROM", importSPRfromROM);
@@ -319,7 +324,7 @@ namespace PaletteCreator
         }
 
         // IMPORT SPR
-        private void importSPR_MouseEnter(object sender, EventArgs e)
+        private void importSPR_MouseHover(object sender, EventArgs e)
         {
             toolTip1.Show("Import player sprite data from SPR", importSPR);
         }
@@ -515,9 +520,13 @@ namespace PaletteCreator
                     data[0x7000+i] =  palette_data[i];
                 }
 
-                FileStream fs = new FileStream(ExportSPRsaveDialog.FileName, FileMode.OpenOrCreate, FileAccess.Write);
-                fs.Write(data, 0, 0x7000 + 0x78);
-                fs.Close();
+                Array.Copy(this.ROM_DATA, 0x80000, loadedSprite.PixelData, 0, 0x7000);
+                var spriteFileBytes = loadedSprite.ToByteArray();
+                File.WriteAllBytes(ExportSPRsaveDialog.FileName, spriteFileBytes);
+
+                //FileStream fs = new FileStream(ExportSPRsaveDialog.FileName, FileMode.OpenOrCreate, FileAccess.Write);
+                //fs.Write(data, 0, 0x7000 + 0x78);
+                //fs.Close();
             }
         }
 
@@ -897,19 +906,79 @@ namespace PaletteCreator
         //  Select SPR
         private void injectROM_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("1. Load SPR\n2. Load ROM\n3. Windows will warn you that the ROM exists. This app will NOT overwrite your ROM file.", "Sprite Injection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show("1. Load SPR\n2. Load ROM\n3. Windows will warn you that the ROM exists. This app will NOT overwrite your ROM file.", "Sprite Injection", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            InjectSPRopenDialog.ShowDialog();
+            //InjectSPRopenDialog.ShowDialog();
+
+            OpenFileDialog sprDialog = new OpenFileDialog();
+            sprDialog.Title = "Select Sprite File to Inject";
+            sprDialog.Filter = SpriteLibrary.Sprite.OpenFileDialogFilter;
+            if(sprDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            SpriteLibrary.PlayerSprite sprite = new SpriteLibrary.PlayerSprite(File.ReadAllBytes(sprDialog.FileName));
+            if(sprite.IsValidPlayerSprite == false)
+            {
+                MessageBox.Show("Invalid sprite file");
+                return;
+            }
+
+            OpenFileDialog romDialog = new OpenFileDialog();
+            sprDialog.Title = "Select ROM File to Inject";
+            romDialog.Filter = "Rom (*.sfc)|*.sfc|All Files (*.*)|*.*";
+            if(romDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            var spriteName = Path.GetFileNameWithoutExtension(sprDialog.FileName);
+            var romName = Path.GetFileNameWithoutExtension(romDialog.FileName);
+            var romPath = Path.GetFullPath(romDialog.FileName);
+
+            var newRomName = $"{spriteName}-{romName}{Path.GetExtension(romDialog.FileName)}";
+
+            SaveFileDialog newRomDialog = new SaveFileDialog();
+            newRomDialog.Title = "Select ROM File to Save Injected ROM";
+            newRomDialog.FileName = newRomName;
+            newRomDialog.Filter = romDialog.Filter;
+            if(newRomDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            FileStream srcFs = new FileStream(romDialog.FileName, FileMode.Open, FileAccess.Read);
+            FileStream destFs = new FileStream(newRomDialog.FileName, FileMode.OpenOrCreate, FileAccess.Write);
+
+            int fileLength = (int)srcFs.Length;
+
+            var romBytes = new byte[srcFs.Length];
+            srcFs.Read(romBytes, 0, fileLength);
+            srcFs.Close();
+
+            Array.Copy(sprite.PixelData, 0, romBytes, 0x80000, sprite.PixelDataLength);
+            Array.Copy(sprite.PaletteData, 0, romBytes, 0x0DD308, 0x78);
+            Array.Copy(sprite.PaletteData, 0x78, romBytes, 0xDEDF5, 4);
+
+            destFs.Write(romBytes, 0, fileLength);
+            destFs.Close();
+
+            MessageBox.Show($"Wrote file\r\n{newRomDialog.FileName}");
         }
 
         // INJECT SPR TO ROM
         //  Select ROM
         private void InjectSPRopenDialog_FileOk(object sender, CancelEventArgs e)
         {
-            //filestream open .spr file
-            FileStream fs = new FileStream(InjectSPRopenDialog.FileName, FileMode.Open, FileAccess.Read);
-            fs.Read(sprite_data,0,0x7078);
-            fs.Close();
+            SpriteLibrary.PlayerSprite sprite = new SpriteLibrary.PlayerSprite(File.ReadAllBytes(InjectSPRopenDialog.FileName));
+
+            ////filestream open .spr file
+            //FileStream fs = new FileStream(InjectSPRopenDialog.FileName, FileMode.Open, FileAccess.Read);
+            //fs.Read(sprite_data,0,0x7078);
+            //fs.Close();
+            Array.Copy(sprite.PixelData, sprite_data, 0x7000);
+            Array.Copy(sprite.PaletteData, sprite_data, 0x78); // TODO: fix this to load gloves
 
             InjectROMsaveDialog.ShowDialog();
         }
@@ -987,5 +1056,6 @@ namespace PaletteCreator
             AboutBox1 a = new AboutBox1();
             a.Show();
         }
+
     }
 }

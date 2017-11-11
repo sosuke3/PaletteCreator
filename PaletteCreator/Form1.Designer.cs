@@ -57,9 +57,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.importPNG = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.injectROM = new System.Windows.Forms.Button();
             this.InjectSPRopenDialog = new System.Windows.Forms.OpenFileDialog();
@@ -92,6 +89,7 @@
             this.pictureBox2.TabIndex = 2;
             this.pictureBox2.TabStop = false;
             this.pictureBox2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox2_MouseDoubleClick);
+            this.pictureBox2.MouseLeave += new System.EventHandler(this.pictureBox2_MouseLeave);
             this.pictureBox2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox2_MouseMove);
             // 
             // comboBox1
@@ -262,7 +260,7 @@
             this.importSPR.Text = "Import SPR";
             this.importSPR.UseVisualStyleBackColor = true;
             this.importSPR.Click += new System.EventHandler(this.importSPR_Click_1);
-            this.importSPR.MouseEnter += new System.EventHandler(this.importSPR_MouseEnter);
+            this.importSPR.MouseHover += new System.EventHandler(this.importSPR_MouseHover);
             // 
             // openFileDialog5
             // 
@@ -315,36 +313,6 @@
             this.toolTip1.SetToolTip(this.importPNG, "Use ALttPNG on Github");
             this.importPNG.UseVisualStyleBackColor = true;
             this.importPNG.Click += new System.EventHandler(this.importPNG_Click);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(101, 77);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(27, 13);
-            this.label5.TabIndex = 19;
-            this.label5.Text = "Red\r\n";
-            this.label5.Visible = false;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(101, 100);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(36, 13);
-            this.label6.TabIndex = 20;
-            this.label6.Text = "Green";
-            this.label6.Visible = false;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(101, 120);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(28, 13);
-            this.label7.TabIndex = 21;
-            this.label7.Text = "Blue";
-            this.label7.Visible = false;
             // 
             // checkBox1
             // 
@@ -426,9 +394,6 @@
             this.ClientSize = new System.Drawing.Size(719, 611);
             this.Controls.Add(this.injectROM);
             this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.importPNG);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.exportPNG);
@@ -489,9 +454,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button importPNG;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
 /*
         private System.Windows.Forms.TextBox r1;
         private System.Windows.Forms.TextBox g1;
