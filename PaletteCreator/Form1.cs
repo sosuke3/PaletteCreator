@@ -41,7 +41,8 @@ namespace PaletteCreator
 
             colorDialog1.FullOpen = true;
 
-            ImportSPRopenDialog.Filter = "Sprite Files (*.zspr;*.spr)|*.zspr;*.spr|All Files (*.*)|*.*";
+            ImportSPRopenDialog.Filter = SpriteLibrary.Sprite.OpenFileDialogFilter;
+            ExportSPRsaveDialog.Filter = SpriteLibrary.Sprite.SaveFileDialogFilter;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -521,6 +522,7 @@ namespace PaletteCreator
                 }
 
                 Array.Copy(this.ROM_DATA, 0x80000, loadedSprite.PixelData, 0, 0x7000);
+                loadedSprite.PaletteData = palette_data;
                 var spriteFileBytes = loadedSprite.ToByteArray();
                 File.WriteAllBytes(ExportSPRsaveDialog.FileName, spriteFileBytes);
 
