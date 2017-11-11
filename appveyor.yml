@@ -16,7 +16,7 @@ configuration: Release
 before_build:
 - nuget sources add -Name Sosuke3-MyGetFeed -Source https://www.myget.org/F/sosuke3-ci/api/v3/index.json
 - nuget restore
-- nuget update
+- nuget update PaletteCreator.sln
 
 build:
   verbosity: minimal

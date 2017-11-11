@@ -37,6 +37,7 @@ namespace PaletteCreator
         {
             InitializeComponent();
 
+            this.Text += $" - {ProductVersion}";
             colorDialog1.FullOpen = true;
         }
 

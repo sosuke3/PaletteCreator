@@ -14,9 +14,9 @@ namespace PaletteCreator
         public AboutBox1()
         {
             InitializeComponent();
-            this.Text = String.Format("About {0} {1}", AssemblyTitle, PaletteCreator.Properties.Resources.Version);
+            this.Text = String.Format("About {0} {1}", AssemblyTitle, ProductVersion);
             this.labelProductName.Text = AssemblyProduct;
-            this.labelVersion.Text = String.Format("Version {0}", PaletteCreator.Properties.Resources.Version);
+            this.labelVersion.Text = String.Format("Version {0}", ProductVersion);
             this.labelCopyright.Text = AssemblyCopyright;
             this.textBoxDescription.Text = "Original by: Zarby89" + "\r\n" +
                                            "Edited by: MikeTrethewey";
