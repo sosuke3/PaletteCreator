@@ -178,7 +178,7 @@
             this.exportSPR.TabIndex = 9;
             this.exportSPR.Text = "Export SPR";
             this.exportSPR.UseVisualStyleBackColor = true;
-            this.exportSPR.Click += new System.EventHandler(this.exportSPR_Click_1);
+            this.exportSPR.Click += new System.EventHandler(this.exportSPR_Click);
             // 
             // button6
             // 

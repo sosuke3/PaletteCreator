@@ -1,0 +1,37 @@
+version: 1.0.{build}
+
+skip_tags: true
+
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
+  assembly_informational_version: '{version}'
+
+platform: Any CPU
+
+configuration: Release
+
+before_build:
+- nuget sources add -Name Sosuke3-MyGetFeed -Source https://www.myget.org/F/sosuke3-ci/api/v3/index.json
+- nuget restore
+- nuget update
+
+build:
+  verbosity: minimal
+  project: PaletteCreator.sln
+
+after_build:
+- 7z a PaletteCreator-%APPVEYOR_BUILD_VERSION%.zip %APPVEYOR_BUILD_FOLDER%\PaletteCreator\bin\%CONFIGURATION%\SpriteLibrary.dll
+- 7z a PaletteCreator-%APPVEYOR_BUILD_VERSION%.zip %APPVEYOR_BUILD_FOLDER%\PaletteCreator\bin\%CONFIGURATION%\PaletteCreator.exe
+- 7z a PaletteCreator-%APPVEYOR_BUILD_VERSION%.zip %APPVEYOR_BUILD_FOLDER%\PaletteCreator\bin\%CONFIGURATION%\PaletteCreator.exe.config
+
+artifacts:
+- path: PaletteCreator-$(appveyor_build_version).zip
+
+deploy:
+- provider: GitHub
+  auth_token:
+    secure: ViWNMG9POKQc60IVRa88gr+T8To/aPCGDMn8xGVPGACQYx/sESKtXg77AS/LQt0F
+  draft: false
