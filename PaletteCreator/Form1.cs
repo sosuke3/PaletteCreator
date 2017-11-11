@@ -530,6 +530,10 @@ namespace PaletteCreator
                 //fs.Write(data, 0, 0x7000 + 0x78);
                 //fs.Close();
             }
+            else
+            {
+                MessageBox.Show("You need to load something before you can save it");
+            }
         }
 
         private void ExportROMsaveDialog_FileOk(object sender, CancelEventArgs e)
@@ -584,6 +588,10 @@ namespace PaletteCreator
                 fs.Write(ROM_DATA, 0, ROM_DATA.Length);
                 fs.Close();
             }
+            else
+            {
+                MessageBox.Show("You need to load something before you can save it");
+            }
         }
 
         private void exportSPR_Click(object sender, EventArgs e)
@@ -591,6 +599,11 @@ namespace PaletteCreator
             if (tempFolders[6] != null)
             {
                 ExportSPRsaveDialog.InitialDirectory = tempFolders[6];
+            }
+            if(ROM_DATA == null)
+            {
+                MessageBox.Show("You need to load something before you can save it");
+                return;
             }
 
             ExportSPRsaveDialog.ShowDialog();
