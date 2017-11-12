@@ -449,7 +449,7 @@ namespace PaletteCreator
             }
 
             FileStream fs = new FileStream(ExportYYPalettesaveDialog.FileName, FileMode.OpenOrCreate, FileAccess.Write);
-            fs.Write(palette_data, 0, 0x300);
+            fs.Write(palette_data, 0, 0xC0);
             fs.Close();
         }
 
